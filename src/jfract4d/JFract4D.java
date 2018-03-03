@@ -1,10 +1,14 @@
 package jfract4d;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jfract4d.jfract.IInfractionManager;
 
 /**
  *
@@ -14,7 +18,7 @@ public class JFract4D extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/FXMLDocument.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -26,6 +30,14 @@ public class JFract4D extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        try {
+            IInfractionManager.init("jfract.properties");
+        } catch (IOException ex) {
+            Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
+        }
         launch(args);
     }
 
