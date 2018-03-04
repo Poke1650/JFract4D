@@ -22,12 +22,12 @@ public class ConfigManager {
     /**
      * Configuration data
      */
-    private static Properties properties = new Properties();
+    private Properties properties = new Properties();
 
     /**
      * Path to the configuration file
      */
-    private static String path;
+    private String path;
 
     /**
      * Reads and parse a configuration file
@@ -36,7 +36,7 @@ public class ConfigManager {
      * @throws FileNotFoundException if the file at configPath does not exist
      * @throws IOException if there's an error white reading the properties file
      */
-    public static void load(String configPath) throws FileNotFoundException, IOException {
+    public void load(String configPath) throws FileNotFoundException, IOException {
         FileInputStream in = new FileInputStream(configPath);
         path = configPath;
         properties.load(in);
@@ -46,7 +46,7 @@ public class ConfigManager {
      * @param key
      * @return value in config for the given key
      */
-    public static String get(String key) {
+    public String get(String key) {
         return properties.getProperty(key);
     }
 
@@ -59,9 +59,9 @@ public class ConfigManager {
      * @param key
      * @param value
      */
-    public static void set(String key, String value) throws IOException {
+    public void set(String key, String value) throws IOException {
         properties.setProperty(key, value);
-        ConfigManager.flush();
+        this.flush();
     }
 
     /**
@@ -72,10 +72,10 @@ public class ConfigManager {
      * @param writeToDisk indicate if the config file should be written to disk
      * @throws java.io.IOException
      */
-    public static void set(String key, String value, boolean writeToDisk) throws IOException {
+    public void set(String key, String value, boolean writeToDisk) throws IOException {
         properties.setProperty(key, value);
         if (writeToDisk) {
-            ConfigManager.flush();
+            this.flush();
         }
     }
 
@@ -84,7 +84,7 @@ public class ConfigManager {
      *
      * @throws java.io.IOException
      */
-    public static void flush() throws IOException {
+    public void flush() throws IOException {
         File f = new File(path);
 
         OutputStream out;

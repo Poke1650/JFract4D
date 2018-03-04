@@ -29,4 +29,14 @@ public interface Infraction {
      * @return the time at which this infraction was given 
      */
     Date getTime();
+    
+    /**
+     * @return the ID of the infraction, a 8 character HEX string 
+     */
+    String getID();
+    
+    /**
+     * @return if the infraction is still in effect or was pardonned
+     */
+    boolean isEffective();
 }

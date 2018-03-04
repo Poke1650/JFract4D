@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.IOException;
+import jfract4d.jfract.JFract;
 
 public class DatabaseManager {
 
-    private static String url;
-    private static String username;
-    private static String password;
+    private String url;
+    private String username;
+    private String password;
 
     /**
      * Initializes the data source.
@@ -17,17 +18,17 @@ public class DatabaseManager {
      * @param configPath the name of the property file that contains the
      * database driver, URL, username, and password
      */
-    public static void init(String driver, String url, String username, String password) throws IOException, ClassNotFoundException {
-        DatabaseManager.url = url;
+    public void init(String driver, String url, String username, String password) throws IOException, ClassNotFoundException {
+        this.url = url;
         if (username == null) {
-            DatabaseManager.username = "";
+            this.username = "";
         } else {
-            DatabaseManager.username = username;
+            this.username = username;
         }
         if (password == null) {
-            DatabaseManager.password = "";
+            this.password = "";
         } else {
-            DatabaseManager.password = password;
+            this.password = password;
         }
         if (driver != null) {
             Class.forName(driver);
@@ -37,8 +38,11 @@ public class DatabaseManager {
     /**
      * Initializes the data source using the ConfigManager
      */
-    public static void init() throws IOException, ClassNotFoundException {
-        DatabaseManager.init(ConfigManager.get("jdbc.driver"), ConfigManager.get("jdbc.url"), ConfigManager.get("jdbc.username"), ConfigManager.get("jdbc.password"));
+    public void init() throws IOException, ClassNotFoundException {
+        
+        ConfigManager cf = JFract.getConfigManager();
+        
+        this.init(cf.get("jdbc.driver"), cf.get("jdbc.url"), cf.get("jdbc.username"), cf.get("jdbc.password"));
     }
 
     /**
@@ -46,7 +50,7 @@ public class DatabaseManager {
      *
      * @return the database connection
      */
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
     }
 }

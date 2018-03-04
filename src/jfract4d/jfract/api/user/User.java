@@ -13,6 +13,12 @@ public interface User extends Comparable<User> {
     Role getRole();
     
     /**
+     * Sets a role to the user
+     * @param role 
+     */
+    void setRole(Role role);
+    
+    /**
      * @return an unique ID that identify this user
      */
     String getID();
