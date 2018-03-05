@@ -1,7 +1,7 @@
 package jfract4d;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -11,12 +11,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import jfract4d.discord.data.DiscordDataManager;
 import jfract4d.discord.exception.MalformedDiscordIDException;
+import jfract4d.discord.user.DiscordRole;
 import jfract4d.discord.user.DiscordUser;
 
 import jfract4d.jfract.JFract;
-import jfract4d.jfract.States;
 import jfract4d.jfract.api.data.InfractionManager;
 import jfract4d.jfract.api.data.UserManager;
+import jfract4d.jfract.api.user.Role;
 import jfract4d.jfract.api.user.User;
 
 /**
@@ -47,14 +48,7 @@ public class JFract4D extends Application {
 
             UserManager uManager = JFract.getDataManager().getUserManager();
             InfractionManager iManager = JFract.getDataManager().getInfractionManager();
-
-            //User test = new DiscordUser("132517202308890624");
-            //uManager.addUser(new DiscordUser("258005651816054784"));
-            //uManager.addUser(test);
-            //uManager.removeUser(test.getID());
-            for (User u : uManager.getUsers()) {
-                System.out.printf("Id: %s, Role: %s\n", u.getID(), u.getRole() != null ? u.getRole().getName() : "NONE");
-            }
+            
 
         } catch (IOException ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);

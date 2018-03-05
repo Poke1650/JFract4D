@@ -21,6 +21,12 @@ public interface UserManager {
      * @param user
      */
     void addUser(User user);
+    
+    /**
+     * Add all users on the list
+     * @param user 
+     */
+    void addUsers(List<User> user);
 
     /**
      * Remove a user from the database
@@ -78,7 +84,13 @@ public interface UserManager {
      *
      * @param role
      */
-    void updateRole(Role role);
+    void updateRole(String id, Role role);
+    
+    /**
+     * Remove a role by its ID
+     * @param id 
+     */
+    void removeRole(String id);
 
     /**
      *

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,14 +54,39 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
+    public void addUsers(List<User> users) {
+
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "INSERT INTO user VALUES (?,?)";;
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            for (User user : users) {
+                stat.setString(1, user.getID());
+                if (user.getRole() == null) {
+                    stat.setNull(2, Types.CHAR);
+                } else {
+                    stat.setString(2, user.getRole().getID());
+                }
+                stat.addBatch();
+            }
+
+            if (stat != null) {
+                stat.executeBatch();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Override
     public void removeUser(String id) {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement;
-            PreparedStatement stat;
-
-            statement = "DELETE FROM user WHERE discord_id = (?)";
-            stat = conn.prepareStatement(statement);
+            String statement = "DELETE FROM user WHERE discord_id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
 
             stat.setString(1, id);
             stat.executeUpdate();
@@ -69,10 +95,21 @@ public class DiscordUserManager implements UserManager {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void updateUserRole(String user_id, Role newRole) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "UPDATE user SET role = ? WHERE discord_id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, newRole.getID());
+            stat.setString(2, user_id);
+            stat.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -82,11 +119,8 @@ public class DiscordUserManager implements UserManager {
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement;
-            PreparedStatement stat;
-
-            statement = "SELECT * FROM user LEFT JOIN role ON user.role = role.id";
-            stat = conn.prepareStatement(statement);
+            String statement = "SELECT * FROM user LEFT JOIN role ON user.role = role.id";
+            PreparedStatement stat = conn.prepareStatement(statement);
 
             ResultSet result = stat.executeQuery();
 
@@ -121,11 +155,8 @@ public class DiscordUserManager implements UserManager {
     public Role getRoleForUser(String id) {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement;
-            PreparedStatement stat;
-
-            statement = "SELECT * FROM role WHERE id = (SELECT role FROM user WHERE discord_id = ?)";
-            stat = conn.prepareStatement(statement);
+            String statement = "SELECT role.* FROM user INNER JOIN role ON user.role = role.id WHERE user.discord_id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
 
             stat.setString(1, id);
             ResultSet result = stat.executeQuery();
@@ -144,11 +175,8 @@ public class DiscordUserManager implements UserManager {
     public Role getRole(String id) {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement;
-            PreparedStatement stat;
-
-            statement = "SELECT FROM role WHERE id = (?)";
-            stat = conn.prepareStatement(statement);
+            String statement = "SELECT * FROM role WHERE id = (?)";
+            PreparedStatement stat = conn.prepareStatement(statement);
 
             stat.setString(1, id);
             ResultSet result = stat.executeQuery();
@@ -167,11 +195,8 @@ public class DiscordUserManager implements UserManager {
     public void addRole(Role role) {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement;
-            PreparedStatement stat;
-
-            statement = "INSERT INTO role VALUES (?, ?, ?)";
-            stat = conn.prepareStatement(statement);
+            String statement = "INSERT INTO role VALUES (?, ?, ?)";
+            PreparedStatement stat = conn.prepareStatement(statement);
 
             stat.setString(1, role.getID());
             stat.setString(2, role.getName());
@@ -185,8 +210,21 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void updateRole(Role role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateRole(String id, Role role) {
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "UPDATE role SET name = ?, level = ? WHERE id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, role.getName());
+            stat.setInt(2, role.getLevel());
+            stat.setString(3, id);
+
+            stat.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -195,11 +233,8 @@ public class DiscordUserManager implements UserManager {
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement;
-            PreparedStatement stat;
-
-            statement = "SELECT * FROM role";
-            stat = conn.prepareStatement(statement);
+            String statement = "SELECT * FROM role";
+            PreparedStatement stat = conn.prepareStatement(statement);
 
             ResultSet result = stat.executeQuery();
 
@@ -211,5 +246,20 @@ public class DiscordUserManager implements UserManager {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    @Override
+    public void removeRole(String id) {
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "DELETE FROM role WHERE id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, id);
+            stat.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
