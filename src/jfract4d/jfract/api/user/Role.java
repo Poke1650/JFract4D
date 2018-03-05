@@ -15,4 +15,10 @@ public interface Role extends Comparable<Role> {
      * @return the administrative level of the role
      */
     int getLevel();
+    
+    /**
+     * 
+     * @return the ID of the role, 18 char
+     */
+    String getID();
 }

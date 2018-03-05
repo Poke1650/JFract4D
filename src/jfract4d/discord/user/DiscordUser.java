@@ -13,15 +13,23 @@ public class DiscordUser implements User {
 
     private Role role;
 
-    private final String id;
+    private String id;
 
     public DiscordUser(String discordID, Role role) throws MalformedDiscordIDException {
+        setID(discordID);
+        setRole(role);
+    }
+
+    public DiscordUser(String discordID) throws MalformedDiscordIDException {
+        setID(discordID);
+    }
+
+    private void setID(String discordID) throws MalformedDiscordIDException {
         if (!FormatHelper.isValidID(discordID)) {
             throw new MalformedDiscordIDException(discordID);
         }
 
         this.id = discordID;
-        setRole(role);
     }
 
     public void setRole(Role role) {

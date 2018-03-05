@@ -30,5 +30,10 @@ public class DiscordRole implements Role {
     public int compareTo(Role o) {
         return getLevel() > o.getLevel() ? 1 : getLevel() < o.getLevel() ? -1 : 0;
     }
+
+    @Override
+    public String getID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

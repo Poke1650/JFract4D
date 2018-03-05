@@ -34,14 +34,14 @@ public class DatabaseManager {
             Class.forName(driver);
         }
     }
-    
+
     /**
      * Initializes the data source using the ConfigManager
      */
     public void init() throws IOException, ClassNotFoundException {
-        
+
         ConfigManager cf = JFract.getConfigManager();
-        
+
         this.init(cf.get("jdbc.driver"), cf.get("jdbc.url"), cf.get("jdbc.username"), cf.get("jdbc.password"));
     }
 

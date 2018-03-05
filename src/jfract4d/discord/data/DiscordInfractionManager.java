@@ -21,6 +21,10 @@ import jfract4d.jfract.api.user.User;
  */
 public class DiscordInfractionManager implements InfractionManager {
 
+    DiscordInfractionManager() {
+        
+    }
+    
     @Override
     public void addInfractionCategory(InfractionCategory icategory) {
 
