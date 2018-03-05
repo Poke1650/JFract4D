@@ -10,20 +10,23 @@ public class DiscordRole implements Role {
 
     String name;
     int level;
+    String id;
     
-    public DiscordRole(String name, int level) {
+    
+    public DiscordRole(String id, String name, int level) {
         this.name = name;
         this.level = level;
+        this.id = id;
     }
     
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return name;
     }
 
     @Override
     public int getLevel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return level;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class DiscordRole implements Role {
 
     @Override
     public String getID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id;
     }
     
 }

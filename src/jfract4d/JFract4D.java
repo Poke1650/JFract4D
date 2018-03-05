@@ -1,6 +1,7 @@
 package jfract4d;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -14,6 +15,9 @@ import jfract4d.discord.user.DiscordUser;
 
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.States;
+import jfract4d.jfract.api.data.InfractionManager;
+import jfract4d.jfract.api.data.UserManager;
+import jfract4d.jfract.api.user.User;
 
 /**
  *
@@ -41,7 +45,19 @@ public class JFract4D extends Application {
             
             JFract.registerDataManager(new DiscordDataManager());
             
-            JFract.getDataManager().getUserManager().addUser(new DiscordUser("258005651816054784"));
+            UserManager uManager = JFract.getDataManager().getUserManager();
+            InfractionManager iManager = JFract.getDataManager().getInfractionManager();
+            
+            //User test = new DiscordUser("132517202308890624");
+            
+            //uManager.addUser(new DiscordUser("258005651816054784"));
+            //uManager.addUser(test);
+            
+            //uManager.removeUser(test.getID());
+            
+            for (User u : uManager.getUsers()) {
+                System.out.printf("Id: %s, Role: %s\n", u.getID(), u.getRole() != null ? u.getRole().getName():"NONE");
+            }
             
             
         } catch (IOException ex) {

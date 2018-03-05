@@ -25,7 +25,7 @@ public interface UserManager {
      * Remove a user from the database
      * @param user 
      */
-    void removeUser(User user);
+    void removeUser(String id);
     
     /**
      *
