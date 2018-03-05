@@ -89,6 +89,8 @@ public class DiscordInfractionManager implements InfractionManager {
 
     @Override
     public void addInfraction(Infraction infraction) {
+        
+        //stat.setTimetamp(1, DateHelper.toTimestamp(infraction.getTime())
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
