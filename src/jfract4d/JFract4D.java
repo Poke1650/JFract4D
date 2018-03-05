@@ -39,27 +39,23 @@ public class JFract4D extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+
         try {
             JFract.init("jfract.properties");
-            
+
             JFract.registerDataManager(new DiscordDataManager());
-            
+
             UserManager uManager = JFract.getDataManager().getUserManager();
             InfractionManager iManager = JFract.getDataManager().getInfractionManager();
-            
+
             //User test = new DiscordUser("132517202308890624");
-            
             //uManager.addUser(new DiscordUser("258005651816054784"));
             //uManager.addUser(test);
-            
             //uManager.removeUser(test.getID());
-            
             for (User u : uManager.getUsers()) {
-                System.out.printf("Id: %s, Role: %s\n", u.getID(), u.getRole() != null ? u.getRole().getName():"NONE");
+                System.out.printf("Id: %s, Role: %s\n", u.getID(), u.getRole() != null ? u.getRole().getName() : "NONE");
             }
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -69,7 +65,7 @@ public class JFract4D extends Application {
         } catch (Exception ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         launch(args);
     }
 

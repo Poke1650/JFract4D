@@ -15,8 +15,9 @@ public class InfractionHelper {
 
     /**
      * Gets the next unique infraction id
+     *
      * @return
-     * @throws SQLException 
+     * @throws SQLException
      */
     public static String getNextInfractionID() throws SQLException {
 

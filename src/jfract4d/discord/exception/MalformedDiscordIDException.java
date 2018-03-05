@@ -7,7 +7,7 @@ import jfract4d.discord.util.FormatHelper;
  * @author Antoine Gagnon
  */
 public class MalformedDiscordIDException extends Exception {
-    
+
     private String id;
 
     public MalformedDiscordIDException(String id) {
@@ -16,6 +16,7 @@ public class MalformedDiscordIDException extends Exception {
 
     /**
      * Returns the length of the input.
+     *
      * @return the length of the input
      */
     public int getInputLength() {
@@ -24,6 +25,7 @@ public class MalformedDiscordIDException extends Exception {
 
     /**
      * Returns the message.
+     *
      * @return the message
      */
     public String getMessage() {

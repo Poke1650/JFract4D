@@ -69,6 +69,11 @@ public class DiscordUserManager implements UserManager {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @Override
+    public void updateUserRole(String user_id, Role newRole) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public List<User> getUsers() {
@@ -137,12 +142,46 @@ public class DiscordUserManager implements UserManager {
 
     @Override
     public Role getRole(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement;
+            PreparedStatement stat;
+
+            statement = "SELECT FROM role WHERE id = (?)";
+            stat = conn.prepareStatement(statement);
+
+            stat.setString(1, id);
+            ResultSet result = stat.executeQuery();
+
+            if (result.next()) {
+                return new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public void addRole(Role role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement;
+            PreparedStatement stat;
+
+            statement = "INSERT INTO role VALUES (?, ?, ?)";
+            stat = conn.prepareStatement(statement);
+
+            stat.setString(1, role.getID());
+            stat.setString(2, role.getName());
+            stat.setInt(3, role.getLevel());
+
+            stat.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -152,7 +191,25 @@ public class DiscordUserManager implements UserManager {
 
     @Override
     public List<Role> getRoles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        ArrayList<Role> list = new ArrayList<>();
 
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement;
+            PreparedStatement stat;
+
+            statement = "SELECT * FROM role";
+            stat = conn.prepareStatement(statement);
+
+            ResultSet result = stat.executeQuery();
+
+            while (result.next()) {
+                list.add(new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level")));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 }

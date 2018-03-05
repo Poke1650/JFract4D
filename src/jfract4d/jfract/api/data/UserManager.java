@@ -14,62 +14,75 @@ import jfract4d.jfract.api.user.User;
  * @author Antoine Gagnon
  */
 public interface UserManager {
-    
+
     /**
      * Add a user to the database
-     * @param user 
+     *
+     * @param user
      */
     void addUser(User user);
-    
+
     /**
      * Remove a user from the database
-     * @param user 
+     *
+     * @param user
      */
     void removeUser(String id);
-    
+
+    /**
+     * Change the current role of the use by newRole
+     *
+     * @param user_id
+     * @param newRole
+     */
+    void updateUserRole(String user_id, Role newRole);
+
     /**
      *
      * @return every users in the database
      */
     List<User> getUsers();
-    
+
     /**
      * Return the role of a user
+     *
      * @param user
      * @return the role of the given user
      */
     Role getRoleForUser(User user);
-    
+
     /**
      * Return the role of a user
+     *
      * @param user
      * @return the role of the user for the given id
      */
     Role getRoleForUser(String id);
-    
+
     /**
-     * 
+     *
      * @param id
-     * @return 
+     * @return
      */
     Role getRole(String id);
-    
+
     /**
      * Adds a role to the database
+     *
      * @param role
      */
     void addRole(Role role);
-    
-    
+
     /**
      * Update a given role by the updated role
+     *
      * @param role
      */
     void updateRole(Role role);
-    
+
     /**
-     * 
-     * @return every roles 
+     *
+     * @return every roles
      */
     List<Role> getRoles();
 }

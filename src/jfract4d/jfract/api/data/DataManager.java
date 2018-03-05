@@ -10,16 +10,16 @@ package jfract4d.jfract.api.data;
  * @author Antoine Gagnon
  */
 public interface DataManager {
-    
+
     /**
-     * 
-     * @return the infraction manager instance 
+     *
+     * @return the infraction manager instance
      */
     InfractionManager getInfractionManager();
 
     /**
-     * 
-     * @return the user manager instance 
+     *
+     * @return the user manager instance
      */
     UserManager getUserManager();
 }

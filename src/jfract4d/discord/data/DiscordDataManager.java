@@ -9,11 +9,11 @@ import jfract4d.jfract.api.data.UserManager;
  * @author Antoine Gagnon
  */
 public class DiscordDataManager implements DataManager {
-    
+
     private InfractionManager imanager;
-    
+
     private UserManager umanager;
-    
+
     public DiscordDataManager() {
         imanager = new DiscordInfractionManager();
         umanager = new DiscordUserManager();

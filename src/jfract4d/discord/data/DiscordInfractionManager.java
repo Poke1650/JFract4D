@@ -22,9 +22,9 @@ import jfract4d.jfract.api.user.User;
 public class DiscordInfractionManager implements InfractionManager {
 
     DiscordInfractionManager() {
-        
+
     }
-    
+
     @Override
     public void addInfractionCategory(InfractionCategory icategory) {
 
@@ -34,9 +34,9 @@ public class DiscordInfractionManager implements InfractionManager {
 
             stat.setString(1, icategory.getName());
             stat.setInt(2, icategory.getPoints());
-            
+
             stat.executeUpdate();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }

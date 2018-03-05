@@ -6,7 +6,7 @@ import jfract4d.jfract.api.infraction.InfractionCategory;
  *
  * @author Antoine Gagnon
  */
-public class DiscordInfractionCategory implements InfractionCategory{
+public class DiscordInfractionCategory implements InfractionCategory {
 
     @Override
     public String getName() {

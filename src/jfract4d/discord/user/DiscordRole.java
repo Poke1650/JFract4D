@@ -11,14 +11,13 @@ public class DiscordRole implements Role {
     String name;
     int level;
     String id;
-    
-    
+
     public DiscordRole(String id, String name, int level) {
         this.name = name;
         this.level = level;
         this.id = id;
     }
-    
+
     @Override
     public String getName() {
         return name;
@@ -38,5 +37,5 @@ public class DiscordRole implements Role {
     public String getID() {
         return id;
     }
-    
+
 }
