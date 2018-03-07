@@ -29,7 +29,7 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public void addInfractionCategory(InfractionCategory icategory) {
+    public void addInfractionCategory(InfractionCategory icategory) throws SQLException {
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
@@ -46,7 +46,7 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public InfractionCategory getInfractionCategory(String name) {
+    public InfractionCategory getInfractionCategory(String name) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             PreparedStatement stat = conn.prepareStatement("SELECT * FROM infraction_category WHERE name = ?");
@@ -64,8 +64,8 @@ public class DiscordInfractionManager implements InfractionManager {
         }
         return null;
     }
-    
-    public InfractionCategory getInfractionCategory(int id) {
+
+    public InfractionCategory getInfractionCategory(int id) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             PreparedStatement stat = conn.prepareStatement("SELECT * FROM infraction_category WHERE id = ?");
@@ -85,7 +85,7 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public List<InfractionCategory> getInfractionCategories() {
+    public List<InfractionCategory> getInfractionCategories() throws SQLException {
 
         List<InfractionCategory> list = new ArrayList<>();
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
@@ -104,13 +104,12 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public void updateInfractionCategory(String name, InfractionCategory updatedICategory) {
+    public void updateInfractionCategory(String name, InfractionCategory updatedICategory) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "UPDATE infraction_category SET points = ? WHERE name = ?";
             PreparedStatement stat = conn.prepareStatement(statement);
 
-            
             stat.setInt(1, updatedICategory.getPoints());
             stat.setString(2, name);
 
@@ -122,12 +121,12 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public void removeInfractionCategory(String name) {
+    public void removeInfractionCategory(String name) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "DELETE FROM infraction_category WHERE name = ?";
             PreparedStatement stat = conn.prepareStatement(statement);
-            
+
             stat.setString(1, name);
             stat.executeUpdate();
 
@@ -137,16 +136,16 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public void addInfractionType(InfractionType itype) {
+    public void addInfractionType(InfractionType itype) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "INSERT INTO infraction_type (name, description, catgegory) VALUES (?,?,?)";
             PreparedStatement stat = conn.prepareStatement(statement);
-            
+
             stat.setString(1, itype.getName());
             stat.setString(2, itype.getDescription());
             stat.setInt(3, itype.getCategory().getID());
-            
+
             stat.executeUpdate();
 
         } catch (SQLException ex) {
@@ -155,75 +154,72 @@ public class DiscordInfractionManager implements InfractionManager {
     }
 
     @Override
-    public InfractionType getInfractionType(String name) {
+    public InfractionType getInfractionType(String name) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<InfractionType> getInfractionTypes() {
+    public List<InfractionType> getInfractionTypes() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void updateInfractionType(String name, InfractionType updatedIType) {
+    public void updateInfractionType(String name, InfractionType updatedIType) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void removeInfractionType(String name) {
+    public void removeInfractionType(String name) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addInfraction(Infraction infraction) {
-
-        //stat.setTimetamp(1, DateHelper.toTimestamp(infraction.getTime())
-
+    public void addInfraction(Infraction infraction) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Infraction getInfraction(String id) {
+    public Infraction getInfraction(String id) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Infraction> getInfractionByUser(User giver) {
+    public List<Infraction> getInfractionByUser(User giver) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Infraction> getInfractionByGiver(User target) {
+    public List<Infraction> getInfractionByGiver(User target) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Infraction> getInfractionBy(User giver, User target) {
+    public List<Infraction> getInfractionBy(User giver, User target) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Infraction> getInfractionsBetween(Date start, Date end) {
+    public List<Infraction> getInfractionsBetween(Date start, Date end) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Infraction> getAllInfractions() {
+    public List<Infraction> getAllInfractions() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void updateInfraction(String id, Infraction updatedInfraction) {
+    public void updateInfraction(String id, Infraction updatedInfraction) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void removeInfraction(String id) {
+    public void removeInfraction(String id) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void updateInfractionEffective(String id, boolean effective) {
+    public void updateInfractionEffective(String id, boolean effective) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

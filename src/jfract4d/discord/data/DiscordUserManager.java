@@ -76,7 +76,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void removeUser(String id) throws SQLException{
+    public void removeUser(String id) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "DELETE FROM user WHERE discord_id = ?";
@@ -88,7 +88,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void updateUserRole(String user_id, Role newRole) throws SQLException{
+    public void updateUserRole(String user_id, Role newRole) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "UPDATE user SET role = ? WHERE discord_id = ?";
@@ -139,7 +139,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public Role getRoleForUser(String id) throws SQLException{
+    public Role getRoleForUser(String id) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "SELECT role.* FROM user INNER JOIN role ON user.role = role.id WHERE user.discord_id = ?";
@@ -178,7 +178,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void addRole(Role role) throws SQLException{
+    public void addRole(Role role) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "INSERT INTO role VALUES (?, ?, ?)";
@@ -194,7 +194,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void updateRole(String id, Role role) throws SQLException{
+    public void updateRole(String id, Role role) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "UPDATE role SET name = ?, level = ? WHERE id = ?";
@@ -210,7 +210,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public List<Role> getRoles() throws SQLException{
+    public List<Role> getRoles() throws SQLException {
         ArrayList<Role> list = new ArrayList<>();
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
