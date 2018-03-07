@@ -6,7 +6,10 @@
 package jfract4d.gui.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +24,7 @@ import jfract4d.discord.exception.MalformedDiscordIDException;
 
 import jfract4d.discord.user.DiscordRole;
 import jfract4d.discord.util.FormatHelper;
+import jfract4d.gui.FXMLDocumentController;
 import jfract4d.gui.util.AlertUtil;
 
 import jfract4d.gui.util.FormatUtil;
@@ -82,7 +86,10 @@ public class NewRoleController implements Initializable {
             JFract.getDataManager().getUserManager().addRole(new DiscordRole(id.getText(), name.getText(), Integer.valueOf(level.getText())));
             ((Stage) cancelBtn.getScene().getWindow()).close();
         } catch (MalformedDiscordIDException e) {
-            AlertUtil.exceptionDialog("Error adding role", "Error adding role", e.getMessage(), e).showAndWait();
+            AlertUtil.exceptionDialog("Error adding role", "The ID is malformed", e.getMessage(), e).showAndWait();
+        } catch (SQLException ex) {
+            Logger.getLogger(NewRoleController.class.getName()).log(Level.SEVERE, null, ex);
+             AlertUtil.exceptionDialog("Error", "Error adding role", ex.getCause().getMessage(), ex).showAndWait();
         }
     }
 

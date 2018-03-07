@@ -6,7 +6,10 @@
 package jfract4d.gui.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +25,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfract4d.discord.exception.MalformedDiscordIDException;
 import jfract4d.discord.user.DiscordUser;
 import jfract4d.discord.util.FormatHelper;
+import jfract4d.gui.FXMLDocumentController;
+import jfract4d.gui.util.AlertUtil;
 import jfract4d.gui.util.FormatUtil;
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.user.Role;
@@ -80,7 +86,12 @@ public class NewUserController implements Initializable {
         try {
             JFract.getDataManager().getUserManager().addUser(new DiscordUser(id.getText(), (Role) role.getValue()));
             ((Stage) cancelBtn.getScene().getWindow()).close();
-        } catch (Exception e) {
+        } catch (SQLException ex) {
+            AlertUtil.exceptionDialog("Error", "Error adding user", ex.getMessage(), ex).showAndWait();
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(NewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            AlertUtil.exceptionDialog("Error", "Malformed user ID", ex.getMessage(), ex).showAndWait();
         }
 
 
@@ -114,6 +125,11 @@ public class NewUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         id.setTextFormatter(FormatUtil.getIntegerTextFormatter());
         
-        role.getItems().addAll(JFract.getDataManager().getUserManager().getRoles());
+        try {
+            role.getItems().addAll(JFract.getDataManager().getUserManager().getRoles());
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            AlertUtil.exceptionDialog("Error", "Error loading roles", ex.getMessage(), ex).showAndWait();
+        }
     }
 }

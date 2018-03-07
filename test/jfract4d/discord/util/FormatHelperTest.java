@@ -89,6 +89,6 @@ public class FormatHelperTest {
     @Test
     public void testGenerateInfractionID() {
         assertEquals(FormatHelper.generateInfractionID().length(), 8);
-        assertTrue(FormatHelper.generateInfractionID().matches("^[a-zA-Z0-9]*$"));
+        assertTrue(FormatHelper.generateInfractionID().matches("^[a-zA-Z0-9]*$")); //Only Alphanumeric 
     }    
 }

@@ -6,7 +6,10 @@
 package jfract4d.gui;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +25,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfract4d.gui.util.AlertUtil;
 
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.user.User;
@@ -80,10 +84,15 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void loadUserList() {
-        ObservableList<User> data = FXCollections.observableArrayList(JFract.getDataManager().getUserManager().getUsers());
-
-        list.setEditable(false);
-        list.getItems().clear();
-        list.getItems().addAll(data);
+        ObservableList<User> data;
+        try {
+            data = FXCollections.observableArrayList(JFract.getDataManager().getUserManager().getUsers());
+            list.setEditable(false);
+            list.getItems().clear();
+            list.getItems().addAll(data);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            AlertUtil.exceptionDialog("Error", "Error loading users", ex.getMessage(), ex).showAndWait();
+        }
     }
 }

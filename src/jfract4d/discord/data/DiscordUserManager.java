@@ -28,7 +28,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement;
@@ -48,13 +48,11 @@ public class DiscordUserManager implements UserManager {
             }
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void addUsers(List<User> users) {
+    public void addUsers(List<User> users) throws SQLException {
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
@@ -74,15 +72,11 @@ public class DiscordUserManager implements UserManager {
             if (stat != null) {
                 stat.executeBatch();
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
-    public void removeUser(String id) {
+    public void removeUser(String id) throws SQLException{
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "DELETE FROM user WHERE discord_id = ?";
@@ -90,14 +84,11 @@ public class DiscordUserManager implements UserManager {
 
             stat.setString(1, id);
             stat.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void updateUserRole(String user_id, Role newRole) {
+    public void updateUserRole(String user_id, Role newRole) throws SQLException{
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "UPDATE user SET role = ? WHERE discord_id = ?";
@@ -107,13 +98,11 @@ public class DiscordUserManager implements UserManager {
             stat.setString(2, user_id);
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getUsers() throws SQLException {
 
         ArrayList<User> list = new ArrayList<>();
 
@@ -140,19 +129,17 @@ public class DiscordUserManager implements UserManager {
                 }
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
 
     @Override
-    public Role getRoleForUser(User user) {
+    public Role getRoleForUser(User user) throws SQLException {
         return getRoleForUser(user.getID());
     }
 
     @Override
-    public Role getRoleForUser(String id) {
+    public Role getRoleForUser(String id) throws SQLException{
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "SELECT role.* FROM user INNER JOIN role ON user.role = role.id WHERE user.discord_id = ?";
@@ -164,9 +151,6 @@ public class DiscordUserManager implements UserManager {
             if (result.next()) {
                 return new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level"));
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedDiscordIDException ex) {
             Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -174,7 +158,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public Role getRole(String id) {
+    public Role getRole(String id) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "SELECT * FROM role WHERE id = (?)";
@@ -187,8 +171,6 @@ public class DiscordUserManager implements UserManager {
                 return new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level"));
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedDiscordIDException ex) {
             Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -196,7 +178,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void addRole(Role role) {
+    public void addRole(Role role) throws SQLException{
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "INSERT INTO role VALUES (?, ?, ?)";
@@ -208,13 +190,11 @@ public class DiscordUserManager implements UserManager {
 
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void updateRole(String id, Role role) {
+    public void updateRole(String id, Role role) throws SQLException{
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "UPDATE role SET name = ?, level = ? WHERE id = ?";
@@ -226,13 +206,11 @@ public class DiscordUserManager implements UserManager {
 
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public List<Role> getRoles() {
+    public List<Role> getRoles() throws SQLException{
         ArrayList<Role> list = new ArrayList<>();
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
@@ -246,8 +224,6 @@ public class DiscordUserManager implements UserManager {
                 list.add(new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level")));
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedDiscordIDException ex) {
             Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -255,7 +231,7 @@ public class DiscordUserManager implements UserManager {
     }
 
     @Override
-    public void removeRole(String id) {
+    public void removeRole(String id) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
             String statement = "DELETE FROM role WHERE id = ?";
@@ -263,9 +239,6 @@ public class DiscordUserManager implements UserManager {
 
             stat.setString(1, id);
             stat.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
