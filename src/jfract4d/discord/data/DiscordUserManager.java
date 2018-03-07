@@ -167,6 +167,8 @@ public class DiscordUserManager implements UserManager {
 
         } catch (SQLException ex) {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -187,6 +189,8 @@ public class DiscordUserManager implements UserManager {
 
         } catch (SQLException ex) {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -233,7 +237,7 @@ public class DiscordUserManager implements UserManager {
 
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement = "SELECT * FROM role";
+            String statement = "SELECT * FROM role ORDER BY level DESC";
             PreparedStatement stat = conn.prepareStatement(statement);
 
             ResultSet result = stat.executeQuery();
@@ -244,6 +248,8 @@ public class DiscordUserManager implements UserManager {
 
         } catch (SQLException ex) {
             Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

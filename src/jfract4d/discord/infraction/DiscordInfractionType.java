@@ -9,29 +9,70 @@ import jfract4d.jfract.api.infraction.InfractionType;
  */
 public class DiscordInfractionType implements InfractionType {
 
+    /**
+     * Name of the infraction type
+     */
+    String name;
+    
+    /**
+     * Description of the type
+     */
+    String description;
+    
+    /**
+     * Category in which this infraction fall into
+     */
+    InfractionCategory icategory;
+    
+    /**
+     * Internal ID of this infraction type
+     * If id is -1, it hasn't been set by the datamanager
+     */
+    private int id = -1;
+
+    public DiscordInfractionType(String name, String description, InfractionCategory category) {
+        this.name = name.toLowerCase();
+        setCategory(category);
+        setDescription(description);
+    }
+    
+    /**
+     * Sets the id of this infraction
+     * Internal, never manually use this
+     * @param id 
+     */
+    public void setID(int id) {
+        this.id = id;
+    }
+    
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return name;
     }
 
     @Override
     public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return description;
     }
 
     @Override
     public void setDescription(String description) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.description = description;
     }
 
     @Override
     public void setCategory(InfractionCategory iCategory) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.icategory = iCategory;
     }
 
     @Override
     public InfractionCategory getCategory() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return icategory;
+    }
+
+    @Override
+    public int getID() {
+        return id;
     }
 
 }

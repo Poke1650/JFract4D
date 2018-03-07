@@ -1,5 +1,7 @@
 package jfract4d.discord.user;
 
+import jfract4d.discord.exception.MalformedDiscordIDException;
+import jfract4d.discord.util.FormatHelper;
 import jfract4d.jfract.api.user.Role;
 
 /**
@@ -12,10 +14,16 @@ public class DiscordRole implements Role {
     int level;
     String id;
 
-    public DiscordRole(String id, String name, int level) {
+    public DiscordRole(String id, String name, int level) throws MalformedDiscordIDException {
         this.name = name;
         this.level = level;
+
+        if (!FormatHelper.isValidID(id)) {
+            throw new MalformedDiscordIDException(id);
+        }
+
         this.id = id;
+
     }
 
     @Override
@@ -38,4 +46,10 @@ public class DiscordRole implements Role {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Name: %s LvL: %s ID: %s", getName(), getLevel(), getID());
+    }
+    
+    
 }

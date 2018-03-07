@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="161.0" prefWidth="329.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="jfract4d.gui.controller.NewRoleController">
+   <children>
+      <Label layoutX="34.0" layoutY="14.0" text="Role ID:" textAlignment="RIGHT" />
+      <Label layoutX="15.0" layoutY="51.0" text="Role Name:" textAlignment="RIGHT" />
+      <Label layoutX="45.0" layoutY="85.0" text="Level:" textAlignment="RIGHT" />
+      <TextField fx:id="id" layoutX="92.0" layoutY="10.0" onKeyTyped="#onIDKeyTyped" prefHeight="25.0" prefWidth="178.0" />
+      <TextField fx:id="name" layoutX="92.0" layoutY="47.0" prefHeight="25.0" prefWidth="178.0" />
+      <TextField fx:id="level" layoutX="92.0" layoutY="81.0" prefHeight="25.0" prefWidth="30.0" />
+      <Button fx:id="addBtn" layoutX="253.0" layoutY="122.0" mnemonicParsing="false" onAction="#OnBtnAddAction" text="Add role" />
+      <Button fx:id="cancelBtn" layoutX="193.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
+   </children>
+</AnchorPane>

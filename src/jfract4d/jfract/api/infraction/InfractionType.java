@@ -34,4 +34,10 @@ public interface InfractionType {
      * @return the category in which this infraction is
      */
     InfractionCategory getCategory();
+    
+    /**
+     * 
+     * @return gets the ID of this infraction type
+     */
+    int getID();
 }

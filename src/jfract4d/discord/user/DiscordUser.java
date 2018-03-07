@@ -11,8 +11,14 @@ import jfract4d.jfract.api.user.User;
  */
 public class DiscordUser implements User {
 
+    /**
+     * Role of the user
+     */
     private Role role;
 
+    /**
+     * ID of the user, 18 char numeric string
+     */
     private String id;
 
     public DiscordUser(String discordID, Role role) throws MalformedDiscordIDException {
@@ -32,6 +38,7 @@ public class DiscordUser implements User {
         this.id = discordID;
     }
 
+    @Override
     public void setRole(Role role) {
         this.role = role;
     }
@@ -48,7 +55,18 @@ public class DiscordUser implements User {
 
     @Override
     public int compareTo(User o) {
-        return getRole().compareTo(o.getRole());
+
+       return o.getRole() == null && this.role == null ? 0 
+            : o.getRole() != null && this.role == null ? -1 
+            : o.getRole() == null && this.role != null ? 0
+            : this.role.compareTo(o.getRole());
     }
+
+    @Override
+    public String toString() {
+        return String.format("User ID: %s  |  Role: %s", getID(), getRole().toString());
+    }
+    
+    
 
 }

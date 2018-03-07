@@ -20,7 +20,11 @@ public class FormatHelper {
     }
 
     public static boolean isNumeric(String id) {
-        return id.matches("[0-9]+");
+        return id.matches("\\d+");
+    }
+    
+    public static boolean isLetters(String string) {
+        return string.matches(".*[a-zA-Z]+.*[a-zA-Z]");
     }
 
     public static String generateInfractionID() {
@@ -31,4 +35,6 @@ public class FormatHelper {
         }
         return sb.toString().substring(0, INFRACTION_ID_LENGTH);
     }
+    
+    
 }

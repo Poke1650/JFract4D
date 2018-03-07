@@ -6,9 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.FXMLDocumentController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+        <Button fx:id="btnAddRole" layoutX="569.0" layoutY="404.0" onAction="#handleAddRoleClick" text="Add Role" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <Button fx:id="btnAddUser" layoutX="491.0" layoutY="404.0" onAction="#handleAddUserClick" text="Add User" />
+      <ListView fx:id="list" prefHeight="383.0" prefWidth="648.0" />
     </children>
 </AnchorPane>

@@ -1,11 +1,12 @@
 package jfract4d.discord.infraction;
 
+import java.sql.SQLException;
 import java.util.Date;
 import jfract4d.discord.user.DiscordUser;
-import jfract4d.discord.util.FormatHelper;
 import jfract4d.jfract.api.infraction.Infraction;
 import jfract4d.jfract.api.infraction.InfractionType;
 import jfract4d.jfract.api.user.User;
+import jfract4d.jfract.helper.InfractionHelper;
 
 /**
  *
@@ -26,12 +27,12 @@ public class DiscordInfraction implements Infraction {
     /**
      * The target of that infraction
      */
-    DiscordUser target;
+    User target;
 
     /**
      * Type of infraction
      */
-    DiscordInfraction iType;
+    InfractionType iType;
 
     /**
      * If this infraction is effective
@@ -51,14 +52,16 @@ public class DiscordInfraction implements Infraction {
      * @param giver
      * @param target
      * @param time
+     * @param iType
      * @param effective
      */
-    public DiscordInfraction(String id, DiscordUser giver, DiscordUser target, Date time, boolean effective) {
+    public DiscordInfraction(String id, DiscordUser giver, DiscordUser target, Date time, InfractionType iType, boolean effective) {
         this.id = id;
         this.giver = giver;
         this.target = target;
         this.effective = effective;
         this.time = time;
+        this.iType = iType;
     }
 
     /**
@@ -67,10 +70,11 @@ public class DiscordInfraction implements Infraction {
      * @param giver
      * @param target
      * @param time
+     * @throws java.sql.SQLException
      */
-    public DiscordInfraction(DiscordUser giver, DiscordUser target, Date time) {
+    public DiscordInfraction(DiscordUser giver, DiscordUser target, Date time) throws SQLException {
 
-        this.id = FormatHelper.generateInfractionID();
+        this.id = InfractionHelper.getNextInfractionID();
 
         this.giver = giver;
         this.target = target;
@@ -84,10 +88,11 @@ public class DiscordInfraction implements Infraction {
      *
      * @param giver
      * @param target
+     * @throws java.sql.SQLException
      */
-    public DiscordInfraction(DiscordUser giver, DiscordUser target) {
+    public DiscordInfraction(DiscordUser giver, DiscordUser target) throws SQLException {
 
-        this.id = FormatHelper.generateInfractionID();
+        this.id = InfractionHelper.getNextInfractionID();
 
         this.giver = giver;
         this.target = target;
@@ -98,32 +103,32 @@ public class DiscordInfraction implements Infraction {
 
     @Override
     public User getGiver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return giver;
     }
 
     @Override
     public User getTarget() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return target;
     }
 
     @Override
     public InfractionType getType() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return iType;
     }
 
     @Override
     public Date getTime() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return time;
     }
 
     @Override
     public String getID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return id;
     }
 
     @Override
     public boolean isEffective() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return effective;
     }
 
 }
