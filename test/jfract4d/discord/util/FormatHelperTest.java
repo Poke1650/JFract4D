@@ -42,13 +42,12 @@ public class FormatHelperTest {
      */
     @Test
     public void testIsValidID() {
-        System.out.println("isValidID");
-        String id = "";
-        boolean expResult = false;
-        boolean result = FormatHelper.isValidID(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(FormatHelper.isValidID("157563215994290176"));
+        assertFalse(FormatHelper.isValidID(""));
+        assertFalse(FormatHelper.isValidID("15755555555555555555555563215994290176"));
+        assertFalse(FormatHelper.isValidID("157563215994290176AAAAAABDFSDF"));
+        assertFalse(FormatHelper.isValidID("AAAAABDFSDF"));
+        assertFalse(FormatHelper.isValidID("61485ABD651635FSDF15615"));
     }
 
     /**
@@ -56,13 +55,10 @@ public class FormatHelperTest {
      */
     @Test
     public void testIsIDLengthValid() {
-        System.out.println("isIDLengthValid");
-        String id = "";
-        boolean expResult = false;
-        boolean result = FormatHelper.isIDLengthValid(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(FormatHelper.isIDLengthValid("111111111111111111")); //18 of lenght
+        assertFalse(FormatHelper.isIDLengthValid(""));
+        assertFalse(FormatHelper.isIDLengthValid("1111"));
+        assertFalse(FormatHelper.isIDLengthValid("111111111111111111111111111111111111111111111111111111"));
     }
 
     /**
@@ -70,7 +66,6 @@ public class FormatHelperTest {
      */
     @Test
     public void testIsNumeric() {
-       
         assertTrue(FormatHelper.isNumeric("146515"));
         assertTrue(FormatHelper.isNumeric("13423423523523523546515"));
         assertFalse(FormatHelper.isNumeric("a23523523546515"));
@@ -82,13 +77,10 @@ public class FormatHelperTest {
      */
     @Test
     public void testIsLetters() {
-        System.out.println("isLetters");
-        String string = "";
-        boolean expResult = false;
-        boolean result = FormatHelper.isLetters(string);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(FormatHelper.isLetters("ABCabc"));
+        assertFalse(FormatHelper.isLetters("ABCabc!@#"));
+        assertFalse(FormatHelper.isLetters(""));
+        assertFalse(FormatHelper.isLetters("123"));
     }
 
     /**
@@ -96,12 +88,7 @@ public class FormatHelperTest {
      */
     @Test
     public void testGenerateInfractionID() {
-        System.out.println("generateInfractionID");
-        String expResult = "";
-        String result = FormatHelper.generateInfractionID();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
+        assertEquals(FormatHelper.generateInfractionID().length(), 8);
+        assertTrue(FormatHelper.generateInfractionID().matches("^[a-zA-Z0-9]*$"));
+    }    
 }
