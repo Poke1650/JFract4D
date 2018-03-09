@@ -74,15 +74,15 @@ public class NewUserController implements Initializable {
         if (!FormatHelper.isValidID(id.getText())) {
             new Alert(Alert.AlertType.ERROR, "Please enter a valid ID", ButtonType.OK).showAndWait();
             event.consume();
-        } else if(role.getValue() == null) {
+        } else if (role.getValue() == null) {
             new Alert(Alert.AlertType.ERROR, "Please select a role", ButtonType.OK).showAndWait();
             event.consume();
         }
-        
+
         if (event.isConsumed()) {
             return;
         }
-                
+
         try {
             JFract.getDataManager().getUserManager().addUser(new DiscordUser(id.getText(), (Role) role.getValue()));
             ((Stage) cancelBtn.getScene().getWindow()).close();
@@ -93,7 +93,6 @@ public class NewUserController implements Initializable {
             Logger.getLogger(NewUserController.class.getName()).log(Level.SEVERE, null, ex);
             AlertUtil.exceptionDialog("Error", "Malformed user ID", ex.getMessage(), ex).showAndWait();
         }
-
 
     }
 
@@ -108,23 +107,23 @@ public class NewUserController implements Initializable {
             stage.setScene(new Scene(root1));
             stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("resources/icons/jfract.png")));
             stage.showAndWait();
-            
+
             role.getItems().clear();
             role.getItems().addAll(JFract.getDataManager().getUserManager().getRoles());
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         id.setTextFormatter(FormatUtil.getIntegerTextFormatter());
-        
+
         try {
             role.getItems().addAll(JFract.getDataManager().getUserManager().getRoles());
         } catch (SQLException ex) {

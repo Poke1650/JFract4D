@@ -45,7 +45,7 @@ public class NewRoleController implements Initializable {
 
     @FXML
     private TextField level;
-    
+
     @FXML
     private Button cancelBtn;
 
@@ -89,7 +89,7 @@ public class NewRoleController implements Initializable {
             AlertUtil.exceptionDialog("Error adding role", "The ID is malformed", e.getMessage(), e).showAndWait();
         } catch (SQLException ex) {
             Logger.getLogger(NewRoleController.class.getName()).log(Level.SEVERE, null, ex);
-             AlertUtil.exceptionDialog("Error", "Error adding role", ex.getCause().getMessage(), ex).showAndWait();
+            AlertUtil.exceptionDialog("Error", "Error adding role", ex.getCause().getMessage(), ex).showAndWait();
         }
     }
 

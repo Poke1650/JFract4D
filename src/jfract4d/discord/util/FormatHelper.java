@@ -22,7 +22,7 @@ public class FormatHelper {
     public static boolean isNumeric(String id) {
         return id.matches("\\d+");
     }
-    
+
     public static boolean isLetters(String string) {
         return string.matches(".*[a-zA-Z]+.*[a-zA-Z]");
     }
@@ -35,6 +35,5 @@ public class FormatHelper {
         }
         return sb.toString().substring(0, INFRACTION_ID_LENGTH);
     }
-    
-    
+
 }

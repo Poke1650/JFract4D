@@ -23,11 +23,12 @@ public interface UserManager {
      * @throws java.sql.SQLException
      */
     void addUser(User user) throws SQLException;
-    
+
     /**
      * Add all users on the list
-     * @param user 
-     * @throws java.sql.SQLException 
+     *
+     * @param user
+     * @throws java.sql.SQLException
      */
     void addUsers(List<User> user) throws SQLException;
 
@@ -97,11 +98,12 @@ public interface UserManager {
      * @throws java.sql.SQLException
      */
     void updateRole(String id, Role role) throws SQLException;
-    
+
     /**
      * Remove a role by its ID
-     * @param id 
-     * @throws java.sql.SQLException 
+     *
+     * @param id
+     * @throws java.sql.SQLException
      */
     void removeRole(String id) throws SQLException;
 

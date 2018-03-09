@@ -82,7 +82,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         loadUserList();
     }
-    
+
     private void loadUserList() {
         ObservableList<User> data;
         try {

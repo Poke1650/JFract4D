@@ -50,6 +50,5 @@ public class DiscordRole implements Role {
     public String toString() {
         return String.format("Name: %s LvL: %s ID: %s", getName(), getLevel(), getID());
     }
-    
-    
+
 }

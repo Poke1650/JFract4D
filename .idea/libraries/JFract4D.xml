@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JFract4D">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/JFract4D.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

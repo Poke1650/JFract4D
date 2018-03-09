@@ -26,7 +26,7 @@ public interface InfractionManager {
      * @param icaterogy
      * @throws java.sql.SQLException
      */
-    void addInfractionCategory(InfractionCategory icaterogy) throws SQLException ;
+    void addInfractionCategory(InfractionCategory icaterogy) throws SQLException;
 
     /**
      * Gets an infraction category by its name
@@ -80,6 +80,15 @@ public interface InfractionManager {
     InfractionType getInfractionType(String name) throws SQLException;
 
     /**
+     * Gets an infraction type by it's ID
+     *
+     * @param id
+     * @return infraction type for the given id or null if not found
+     * @throws SQLException
+     */
+    InfractionType getInfractionType(int id) throws SQLException;
+
+    /**
      * @return every infraction type in the database
      * @throws java.sql.SQLException
      */
@@ -94,6 +103,15 @@ public interface InfractionManager {
      * @throws java.sql.SQLException
      */
     void updateInfractionType(String name, InfractionType updatedIType) throws SQLException;
+    
+    /**
+     * Updates the infraction type going by the id given from the updateIType
+     * passed
+     * @param id
+     * @param updatedIType
+     * @throws SQLException 
+     */
+    void updateInfractionType(int id, InfractionType updatedIType) throws SQLException;
 
     /**
      * Removes an infraction type this will cause every infraction going by that
@@ -103,6 +121,15 @@ public interface InfractionManager {
      * @throws java.sql.SQLException
      */
     void removeInfractionType(String name) throws SQLException;
+    
+    /**
+     * Removes an infraction type this will cause every infraction going by that
+     * type to UNDEFINED
+     *
+     * @param id
+     * @throws java.sql.SQLException
+     */
+    void removeInfractionType(int id) throws SQLException;
 
     /* INFRACTIONS */
     /**
@@ -138,7 +165,7 @@ public interface InfractionManager {
      * @return all the infraction given to the user
      * @throws java.sql.SQLException
      */
-    List<Infraction> getInfractionByGiver(User target) throws SQLException;
+    List<Infraction> getInfractionForTarget(User target) throws SQLException;
 
     /**
      * Gets the infraction given by the giver to the target

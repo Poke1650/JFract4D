@@ -20,5 +20,5 @@ public interface Role extends Comparable<Role> {
      *
      * @return the ID of the role, 18 char
      */
-    String getID();    
+    String getID();
 }

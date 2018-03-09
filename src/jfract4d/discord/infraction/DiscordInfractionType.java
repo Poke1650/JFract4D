@@ -13,20 +13,20 @@ public class DiscordInfractionType implements InfractionType {
      * Name of the infraction type
      */
     String name;
-    
+
     /**
      * Description of the type
      */
     String description;
-    
+
     /**
      * Category in which this infraction fall into
      */
     InfractionCategory icategory;
-    
+
     /**
-     * Internal ID of this infraction type
-     * If id is -1, it hasn't been set by the datamanager
+     * Internal ID of this infraction type If id is -1, it hasn't been set by
+     * the datamanager
      */
     private int id = -1;
 
@@ -35,16 +35,18 @@ public class DiscordInfractionType implements InfractionType {
         setCategory(category);
         setDescription(description);
     }
-    
+
     /**
-     * Sets the id of this infraction
-     * Internal, never manually use this
-     * @param id 
+     * Sets the id of this infraction Internal, never manually use this
+     *
+     * @param id
+     * @return the instance
      */
-    public void setID(int id) {
+    public DiscordInfractionType withID(int id) {
         this.id = id;
+        return this;
     }
-    
+
     @Override
     public String getName() {
         return name;

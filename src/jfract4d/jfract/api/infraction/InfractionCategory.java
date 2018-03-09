@@ -19,10 +19,10 @@ public interface InfractionCategory extends Comparable<InfractionCategory> {
     @Override
     public default int compareTo(InfractionCategory o) {
         return getPoints() > o.getPoints() ? 1 : getPoints() < o.getPoints() ? -1 : 0;
-    }  
-    
+    }
+
     /**
-     * 
+     *
      * @return the id of this infraction category
      */
     int getID();

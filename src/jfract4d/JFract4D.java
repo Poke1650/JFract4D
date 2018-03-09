@@ -1,8 +1,10 @@
 package jfract4d;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,14 +13,15 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jfract4d.discord.data.DiscordDataManager;
 import jfract4d.discord.exception.MalformedDiscordIDException;
+import jfract4d.discord.util.FormatHelper;
 
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.data.InfractionManager;
 import jfract4d.jfract.api.data.UserManager;
-
+import jfract4d.jfract.api.infraction.Infraction;
+import jfract4d.jfract.helper.DateHelper;
 
 /**
- *
  * @author Antoine Gagnon
  */
 public class JFract4D extends Application {
@@ -31,9 +34,9 @@ public class JFract4D extends Application {
 
         stage.setScene(scene);
         stage.setTitle("JFract4D");
-        
-        stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("resources/icons/jfract.png" ))); 
-        
+
+        stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("resources/icons/jfract.png")));
+
         stage.show();
     }
 
@@ -50,6 +53,9 @@ public class JFract4D extends Application {
             UserManager uManager = JFract.getDataManager().getUserManager();
             InfractionManager iManager = JFract.getDataManager().getInfractionManager();
             
+            System.out.println(FormatHelper.generateInfractionID());
+            
+            System.out.println(DateHelper.toSQLDateTime(new Date()));
 
         } catch (IOException ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);

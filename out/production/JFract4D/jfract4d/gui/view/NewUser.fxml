@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="157.0" prefWidth="392.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="jfract4d.gui.controller.NewUserController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="132.0" prefWidth="355.0">
+         <children>
+            <Label layoutX="34.0" layoutY="14.0" text="Use ID:" textAlignment="RIGHT" />
+            <Label layoutX="40.0" layoutY="51.0" text="Role:" textAlignment="RIGHT" />
+            <TextField fx:id="id" layoutX="92.0" layoutY="10.0" onKeyTyped="#onIDKeyTyped" prefHeight="25.0" prefWidth="178.0" />
+            <Button fx:id="addUser" layoutX="205.0" layoutY="97.0" mnemonicParsing="false" onAction="#OnBtnAddAction" text="Add User" />
+            <Button fx:id="cancelBtn" layoutX="139.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleCancelBtn" text="Cancel" />
+            <Button fx:id="addRoleBtn" layoutX="283.0" layoutY="47.0" mnemonicParsing="false" onAction="#onBtnAddRoleAction" text="Add Role" />
+            <ComboBox fx:id="role" layoutX="90.0" layoutY="47.0" prefHeight="25.0" prefWidth="178.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

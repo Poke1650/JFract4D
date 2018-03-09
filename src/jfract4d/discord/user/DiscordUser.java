@@ -56,17 +56,15 @@ public class DiscordUser implements User {
     @Override
     public int compareTo(User o) {
 
-       return o.getRole() == null && this.role == null ? 0 
-            : o.getRole() != null && this.role == null ? -1 
-            : o.getRole() == null && this.role != null ? 0
-            : this.role.compareTo(o.getRole());
+        return o.getRole() == null && this.role == null ? 0
+                : o.getRole() != null && this.role == null ? -1
+                : o.getRole() == null && this.role != null ? 0
+                : this.role.compareTo(o.getRole());
     }
 
     @Override
     public String toString() {
         return String.format("User ID: %s  |  Role: %s", getID(), getRole().toString());
     }
-    
-    
 
 }

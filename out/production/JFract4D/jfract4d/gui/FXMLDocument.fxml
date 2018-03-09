@@ -10,7 +10,7 @@
     <children>
         <Button fx:id="btnAddRole" layoutX="569.0" layoutY="404.0" onAction="#handleAddRoleClick" text="Add Role" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-        <Button fx:id="btnAddUser" layoutX="491.0" layoutY="404.0" onAction="#handleAddUserClick" text="Add User" />
-        <ListView fx:id="list" prefHeight="383.0" prefWidth="648.0" />
+      <Button fx:id="btnAddUser" layoutX="491.0" layoutY="404.0" onAction="#handleAddUserClick" text="Add User" />
+      <ListView fx:id="list" prefHeight="383.0" prefWidth="648.0" />
     </children>
 </AnchorPane>

@@ -9,7 +9,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jfract4d.discord.exception.MalformedDiscordIDException;
+import jfract4d.discord.infraction.DiscordInfraction;
 import jfract4d.discord.infraction.DiscordInfractionCategory;
+import jfract4d.discord.infraction.DiscordInfractionType;
+import jfract4d.discord.user.DiscordRole;
+import jfract4d.discord.user.DiscordUser;
 import jfract4d.jfract.JFract;
 
 import jfract4d.jfract.api.data.InfractionManager;
@@ -17,6 +23,7 @@ import jfract4d.jfract.api.infraction.Infraction;
 import jfract4d.jfract.api.infraction.InfractionCategory;
 import jfract4d.jfract.api.infraction.InfractionType;
 import jfract4d.jfract.api.user.User;
+import jfract4d.jfract.helper.DateHelper;
 
 /**
  *
@@ -40,8 +47,6 @@ public class DiscordInfractionManager implements InfractionManager {
 
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -59,8 +64,6 @@ public class DiscordInfractionManager implements InfractionManager {
                 return new DiscordInfractionCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("points"));
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -78,8 +81,6 @@ public class DiscordInfractionManager implements InfractionManager {
                 return new DiscordInfractionCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("points"));
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -97,8 +98,6 @@ public class DiscordInfractionManager implements InfractionManager {
                 list.add(new DiscordInfractionCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("points")));
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -115,8 +114,6 @@ public class DiscordInfractionManager implements InfractionManager {
 
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -130,8 +127,6 @@ public class DiscordInfractionManager implements InfractionManager {
             stat.setString(1, name);
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -148,79 +143,398 @@ public class DiscordInfractionManager implements InfractionManager {
 
             stat.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public InfractionType getInfractionType(String name) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement("SELECT infraction_type.*, infraction_category.name AS 'c_name', infraction_category.points FROM `infraction_type` LEFT JOIN infraction_category on infraction_type.category = infraction_category.id WHERE infraction_type.name = ?");
+
+            stat.setString(1, name);
+
+            ResultSet rs = stat.executeQuery();
+
+            if (rs.next()) {
+                return new DiscordInfractionType(
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        new DiscordInfractionCategory(
+                                rs.getInt("category"),
+                                rs.getString("c_name"),
+                                rs.getInt("points")
+                        )
+                ).withID(rs.getInt("id"));
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public InfractionType getInfractionType(int id) throws SQLException {
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement("SELECT infraction_type.*, infraction_category.name AS 'c_name', infraction_category.points FROM `infraction_type` LEFT JOIN infraction_category on infraction_type.category = infraction_category.id WHERE infraction_type.id = ?");
+
+            stat.setInt(1, id);
+
+            ResultSet rs = stat.executeQuery();
+
+            //TODO: make a DiscordInfractionTypeBuilder
+            if (rs.next()) {
+                return new DiscordInfractionType(
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        new DiscordInfractionCategory(
+                                rs.getInt("category"),
+                                rs.getString("c_name"),
+                                rs.getInt("points")
+                        )
+                ).withID(rs.getInt("id"));
+            }
+
+        }
+        return null;
     }
 
     @Override
     public List<InfractionType> getInfractionTypes() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<InfractionType> list = new ArrayList<>();
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement("SELECT infraction_type.*, infraction_category.name AS 'c_name', infraction_category.points FROM `infraction_type` LEFT JOIN infraction_category on infraction_type.category = infraction_category.id");
+            ResultSet rs = stat.executeQuery();
+
+            while (rs.next()) {
+                list.add(new DiscordInfractionType(
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        new DiscordInfractionCategory(
+                                rs.getInt("category"),
+                                rs.getString("c_name"),
+                                rs.getInt("points")
+                        )
+                ).withID(rs.getInt("id"))
+                );
+            }
+
+        }
+        return list;
     }
 
     @Override
     public void updateInfractionType(String name, InfractionType updatedIType) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "UPDATE infraction_type SET name = ?, description = ?, category = ? WHERE infraction_type.name = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, updatedIType.getName());
+            stat.setString(2, updatedIType.getDescription());
+            stat.setInt(3, updatedIType.getCategory().getID());
+            stat.setString(4, name);
+
+            stat.executeUpdate();
+
+        }
+    }
+
+    @Override
+    public void updateInfractionType(int id, InfractionType updatedIType) throws SQLException {
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "UPDATE infraction_type SET name = ?, description = ?, category = ? WHERE infraction_type.id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, updatedIType.getName());
+            stat.setString(2, updatedIType.getDescription());
+            stat.setInt(3, updatedIType.getCategory().getID());
+            stat.setInt(4, id);
+
+            stat.executeUpdate();
+
+        }
     }
 
     @Override
     public void removeInfractionType(String name) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "DELETE FROM infraction_type WHERE infraction_type.name = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, name);
+            stat.executeUpdate();
+
+        }
+    }
+
+    @Override
+    public void removeInfractionType(int id) throws SQLException {
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "DELETE FROM infraction_type WHERE infraction_type.id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setInt(1, id);
+            stat.executeUpdate();
+
+        }
     }
 
     @Override
     public void addInfraction(Infraction infraction) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement
+                    = "INSERT INTO `infraction` (`id`, `user`, `giver`, `infraction_type`, `time`, `effective`)"
+                    + " VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, infraction.getID());
+            stat.setString(2, infraction.getTarget().getID());
+            stat.setString(3, infraction.getGiver().getID());
+            stat.setInt(4, infraction.getType().getID());
+            stat.setString(5, DateHelper.toSQLDateTime(infraction.getTime()));
+            stat.setBoolean(6, infraction.isEffective());
+
+            stat.executeUpdate();
+
+        }
     }
+
+    private final String INFRACTION_QUERY = "SELECT infraction.id,"
+            + " infraction.giver, ugiver.role as 'grid', rgiver.name AS 'grn', rgiver.level as 'grl',"
+            + " infraction.user, utarget.role as 'trid', rtarget.name AS 'trn', rtarget.level as 'trl',"
+            + " infraction.time,"
+            + " itype.id AS 'itid', itype.name AS 'itypename', itype.description AS 'itypedesc',"
+            + " icat.id AS 'icatid', icat.name AS 'icatname', icat.points AS 'icatpoint',"
+            + " infraction.effective"
+            + " FROM infraction"
+            + " LEFT JOIN user ugiver ON infraction.giver = ugiver.discord_id"
+            + " LEFT JOIN user utarget ON infraction.user = utarget.discord_id"
+            + " LEFT JOIN role rgiver ON ugiver.role = rgiver.id"
+            + " LEFT JOIN role rtarget ON utarget.role = rtarget.id"
+            + " LEFT JOIN infraction_type itype ON infraction.infraction_type = itype.id"
+            + " LEFT JOIN infraction_category icat ON itype.category = icat.id";
 
     @Override
     public Infraction getInfraction(String id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement(INFRACTION_QUERY + " WHERE infraction.id = ?");
+
+            stat.setString(1, id);
+
+            ResultSet rs = stat.executeQuery();
+
+            if (rs.next()) {
+                return new DiscordInfraction(
+                        id,
+                        new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
+                        new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
+                        rs.getDate("time"),
+                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        rs.getBoolean("effective")
+                );
+            }
+
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public List<Infraction> getInfractionByUser(User giver) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        List<Infraction> list = new ArrayList();
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement(INFRACTION_QUERY + " WHERE infraction.giver = ?");
+
+            stat.setString(1, giver.getID());
+
+            ResultSet rs = stat.executeQuery();
+
+            while (rs.next()) {
+                list.add(new DiscordInfraction(
+                        rs.getString("id"),
+                        new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
+                        new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
+                        rs.getDate("time"),
+                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        rs.getBoolean("effective")
+                ));
+            }
+
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
-    public List<Infraction> getInfractionByGiver(User target) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Infraction> getInfractionForTarget(User target) throws SQLException {
+        List<Infraction> list = new ArrayList();
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement(INFRACTION_QUERY + " WHERE infraction.user = ?");
+
+            stat.setString(1, target.getID());
+
+            ResultSet rs = stat.executeQuery();
+
+            while (rs.next()) {
+                list.add(new DiscordInfraction(
+                        rs.getString("id"),
+                        new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
+                        new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
+                        rs.getDate("time"),
+                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        rs.getBoolean("effective")
+                ));
+            }
+
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
     public List<Infraction> getInfractionBy(User giver, User target) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Infraction> list = new ArrayList();
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement(INFRACTION_QUERY + " WHERE infraction.user = ? AND infraction.giver = ?");
+
+            stat.setString(1, target.getID());
+            stat.setString(2, giver.getID());
+
+            ResultSet rs = stat.executeQuery();
+
+            while (rs.next()) {
+                list.add(new DiscordInfraction(
+                        rs.getString("id"),
+                        new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
+                        new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
+                        rs.getDate("time"),
+                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        rs.getBoolean("effective")
+                ));
+            }
+
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
     public List<Infraction> getInfractionsBetween(Date start, Date end) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Infraction> list = new ArrayList();
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement(INFRACTION_QUERY + " WHERE infraction.time >= ? AND infraction.time <= ?");
+
+            stat.setString(1, DateHelper.toSQLDateTime(start));
+            stat.setString(2, DateHelper.toSQLDateTime(end));
+
+            ResultSet rs = stat.executeQuery();
+
+            while (rs.next()) {
+                list.add(new DiscordInfraction(
+                        rs.getString("id"),
+                        new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
+                        new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
+                        rs.getDate("time"),
+                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        rs.getBoolean("effective")
+                ));
+            }
+
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
     public List<Infraction> getAllInfractions() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Infraction> list = new ArrayList();
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            PreparedStatement stat = conn.prepareStatement(INFRACTION_QUERY);
+
+            ResultSet rs = stat.executeQuery();
+
+            while (rs.next()) {
+                list.add(new DiscordInfraction(
+                        rs.getString("id"),
+                        new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
+                        new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
+                        rs.getDate("time"),
+                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        rs.getBoolean("effective")
+                ));
+            }
+
+        } catch (MalformedDiscordIDException ex) {
+            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     @Override
     public void updateInfraction(String id, Infraction updatedInfraction) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "UPDATE infraction SET user = ?, giver = ?, infraction_type = ?, time = ?, effective = ? WHERE id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, updatedInfraction.getTarget().getID());
+            stat.setString(2, updatedInfraction.getGiver().getID());
+            stat.setInt(3, updatedInfraction.getType().getID());
+            stat.setString(4, DateHelper.toSQLDateTime(updatedInfraction.getTime()));
+            stat.setBoolean(5, updatedInfraction.isEffective());
+
+            stat.executeUpdate();
+        }
     }
 
     @Override
     public void removeInfraction(String id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "DELETE FROM infraction WHERE id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+
+            stat.setString(1, id);
+            stat.executeUpdate();
+
+        }
     }
 
     @Override
     public void updateInfractionEffective(String id, boolean effective) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = JFract.getDatabaseManager().getConnection()) {
+
+            String statement = "UPDATE infraction SET effective = ? WHERE id = ?";
+            PreparedStatement stat = conn.prepareStatement(statement);
+            stat.setBoolean(1, effective);
+            stat.setString(2, id);
+            stat.executeUpdate();
+        }
     }
 
 }
