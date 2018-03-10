@@ -15,13 +15,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.Button;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import jfract4d.gui.util.DialogUtil;
 
@@ -42,6 +52,7 @@ public class MainController implements Initializable {
 
     @FXML
     private Button btnAddInfraction;
+
 
     @FXML
     private void AddInfractionClick(ActionEvent event) {
@@ -83,23 +94,44 @@ public class MainController implements Initializable {
     @FXML
     private void EditInfractionClick(ActionEvent event) {
 
+        try {
+            Infraction infract = infractions.getSelectionModel().getSelectedItem();
+
+            if (infract == null) {
+                new Alert(AlertType.ERROR, "Please select an infraction to edit").showAndWait();
+                return;
+            }
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("jfract4d/gui/view/EditInfraction.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Infraction");
+            stage.setScene(new Scene(root1));
+            stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("resources/icons/jfract.png")));
+            EditInfractionController controller = fxmlLoader.getController();
+            controller.setInfraction(infract);
+            stage.showAndWait();
+            loadInfractions();
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
-    private MenuItem btnManageTypes;
-
+    private void InfractionmouseClickEvent(MouseEvent event) {
+        if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
+            btnEditInfraction.fire();
+        }
+    }
+    
     @FXML
-    private void ManageTypesClick(ActionEvent event) {
-
+    private Button btnManageTypeCat;
+    
+    @FXML
+    private void ManageTypeCatClick(ActionEvent event) {
     }
 
-    @FXML
-    private MenuItem btnManageCategories;
-
-    @FXML
-    private void ManageCategoriesClick(ActionEvent event) {
-
-    }
 
     /* Users Tab */
     @FXML
@@ -177,14 +209,15 @@ public class MainController implements Initializable {
                     setText(null);
                 } else {
                     setText(String.format(
-                            "ID: %s\nTarget: %s\nGiver: %s\nType: %s\nCategory: %s pts: %s\nTime: %s",
+                            "ID: %s\nTarget: %s\nGiver: %s\nType: %s\nCategory: %s pts: %s\nTime: %s\nEffective: %s",
                             item.getID(),
                             item.getTarget().getID(),
                             item.getGiver().getID(),
                             item.getType().getName(),
                             item.getType().getCategory().getName(),
                             item.getType().getCategory().getPoints(),
-                            DateHelper.toSQLDateTime(item.getTime())
+                            DateHelper.toSQLDateTime(item.getTime()),
+                            item.isEffective() ? "Yes" : "No"
                     )
                     );
                 }

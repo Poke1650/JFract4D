@@ -6,19 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="294.0" prefWidth="323.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="jfract4d.gui.controller.NewInfractionController">
+<AnchorPane id="AnchorPane" prefHeight="294.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.NewInfractionController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Target:" />
-      <ComboBox fx:id="target" layoutX="62.0" layoutY="10.0" prefWidth="150.0" />
-      <ComboBox fx:id="giver" layoutX="62.0" layoutY="48.0" prefWidth="150.0" />
+      <ComboBox fx:id="target" layoutX="62.0" layoutY="10.0" prefWidth="174.0" />
+      <ComboBox fx:id="giver" layoutX="62.0" layoutY="48.0" prefWidth="174.0" />
       <Label layoutX="21.0" layoutY="52.0" text="Giver:" />
       <Label layoutX="22.0" layoutY="87.0" text="Type:" />
-      <ComboBox fx:id="type" layoutX="62.0" layoutY="83.0" prefWidth="150.0" />
+      <ComboBox fx:id="type" layoutX="62.0" layoutY="83.0" prefWidth="174.0" />
       <DatePicker fx:id="DatePicker" disable="true" layoutX="63.0" layoutY="150.0" />
       <CheckBox fx:id="chkUseCurrent" layoutX="63.0" layoutY="119.0" mnemonicParsing="false" onAction="#UseCurrentClick" selected="true" text="Use current system time" />
-      <Button fx:id="btnNewUser" layoutX="225.0" layoutY="31.0" mnemonicParsing="false" onAction="#NewUserClick" text="New User" />
-      <Button fx:id="btnNewType" layoutX="224.0" layoutY="83.0" mnemonicParsing="false" onAction="#NewTypeClick" text="New Type" />
+      <Button fx:id="btnNewUser" layoutX="246.0" layoutY="48.0" mnemonicParsing="false" onAction="#NewUserClick" text="New User" />
+      <Button fx:id="btnNewType" layoutX="245.0" layoutY="83.0" mnemonicParsing="false" onAction="#NewTypeClick" text="New Type" />
       <TextField fx:id="hour" disable="true" layoutX="132.0" layoutY="188.0" prefHeight="25.0" prefWidth="30.0" />
       <TextField fx:id="minute" disable="true" layoutX="170.0" layoutY="188.0" prefHeight="25.0" prefWidth="30.0" />
       <TextField fx:id="second" disable="true" layoutX="207.0" layoutY="188.0" prefHeight="25.0" prefWidth="30.0" />

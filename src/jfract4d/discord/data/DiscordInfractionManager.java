@@ -507,6 +507,7 @@ public class DiscordInfractionManager implements InfractionManager {
             stat.setInt(3, updatedInfraction.getType().getID());
             stat.setString(4, DateHelper.toSQLDateTime(updatedInfraction.getTime()));
             stat.setBoolean(5, updatedInfraction.isEffective());
+            stat.setString(6, id);
 
             stat.executeUpdate();
         }
