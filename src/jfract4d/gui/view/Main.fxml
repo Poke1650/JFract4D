@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.MainController">
+    <children>
+      <TabPane prefHeight="443.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Infraction">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
+                     <children>
+                        <ListView fx:id="infractions" prefHeight="372.0" prefWidth="648.0" style="-fx-border-insets: 1;" />
+                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                           <items>
+                              <Button fx:id="btnAddInfraction" onAction="#AddInfractionClick" text="Add Infraction" />
+                              <Button fx:id="btnEditInfraction" onAction="#EditInfractionClick" text="Edit Infraction" />
+                              <Button fx:id="btnRemoveInfraction" mnemonicParsing="false" onAction="#RemoveInfractionClick" text="Remove Infraction" />
+                              <Separator disable="true" opacity="0.0" orientation="VERTICAL" prefHeight="33.0" prefWidth="241.0" />
+                              <MenuButton mnemonicParsing="false" text="Manage...">
+                                <items>
+                                  <MenuItem fx:id="btnManageTypes" mnemonicParsing="false" onAction="#ManageTypesClick" text="Types" />
+                                  <MenuItem fx:id="btnManageCategories" mnemonicParsing="false" onAction="#ManageCategoriesClick" text="Categories" />
+                                </items>
+                              </MenuButton>
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Users">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
+                     <children>
+                          <ListView fx:id="list" prefHeight="372.0" prefWidth="648.0" />
+                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                           <items>
+                                <Button fx:id="btnAddUser" onAction="#AddUserClick" text="Add User" />
+                              <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#EditUserClick" text="Edit User" />
+                              <Button fx:id="btnRemoveUser" mnemonicParsing="false" onAction="#RemoveUserClick" text="Remove User" />
+                              <Button fx:id="btnManageRoles" mnemonicParsing="false" onAction="#ManageRolesClick" text="Manage Roles" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+    </children>
+</AnchorPane>

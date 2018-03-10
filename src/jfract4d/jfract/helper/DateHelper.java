@@ -19,4 +19,27 @@ public class DateHelper {
     public static String toSQLDateTime(Date date) {
         return SQL_DATETIME_FORMAT.format(date);
     }
+    
+    public static boolean isValid24hour(String text) {
+        
+        int time;
+        try {
+            time = Integer.valueOf(text);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+        return (time >= 0 && time <= 24);
+    }
+    
+    public static boolean isValidMinSec(String text) {
+        int time;
+        try {
+            time = Integer.valueOf(text);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+        return (time >= 0 && time <= 60);
+    }
 }

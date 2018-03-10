@@ -22,7 +22,7 @@ public class DiscordInfraction implements Infraction {
     /**
      * The user giving the infraction
      */
-    DiscordUser giver;
+    User giver;
 
     /**
      * The target of that infraction
@@ -55,7 +55,7 @@ public class DiscordInfraction implements Infraction {
      * @param iType
      * @param effective
      */
-    public DiscordInfraction(String id, DiscordUser giver, DiscordUser target, Date time, InfractionType iType, boolean effective) {
+    public DiscordInfraction(String id, User giver, User target, Date time, InfractionType iType, boolean effective) {
         this.id = id;
         this.giver = giver;
         this.target = target;
@@ -70,14 +70,17 @@ public class DiscordInfraction implements Infraction {
      * @param giver
      * @param target
      * @param time
+     * @param iType
      * @throws java.sql.SQLException
      */
-    public DiscordInfraction(DiscordUser giver, DiscordUser target, Date time) throws SQLException {
+    public DiscordInfraction(User giver, User target, Date time, InfractionType iType) throws SQLException {
 
         this.id = InfractionHelper.getNextInfractionID();
 
         this.giver = giver;
         this.target = target;
+        
+        this.iType = iType;
 
         this.effective = true;
         this.time = time;
@@ -88,14 +91,17 @@ public class DiscordInfraction implements Infraction {
      *
      * @param giver
      * @param target
+     * @param iType
      * @throws java.sql.SQLException
      */
-    public DiscordInfraction(DiscordUser giver, DiscordUser target) throws SQLException {
+    public DiscordInfraction(User giver, User target, InfractionType iType) throws SQLException {
 
         this.id = InfractionHelper.getNextInfractionID();
 
         this.giver = giver;
         this.target = target;
+        
+        this.iType = iType;
 
         this.effective = true;
         this.time = new Date();

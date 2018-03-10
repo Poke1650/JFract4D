@@ -64,7 +64,7 @@ public class DiscordUser implements User {
 
     @Override
     public String toString() {
-        return String.format("User ID: %s  |  Role: %s", getID(), getRole().toString());
+        return String.format("User ID: %s  |  Role: %s", getID(), getRole().getName());
     }
 
 }

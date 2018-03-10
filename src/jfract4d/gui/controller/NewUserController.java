@@ -28,8 +28,7 @@ import javafx.stage.Stage;
 import jfract4d.discord.exception.MalformedDiscordIDException;
 import jfract4d.discord.user.DiscordUser;
 import jfract4d.discord.util.FormatHelper;
-import jfract4d.gui.FXMLDocumentController;
-import jfract4d.gui.util.AlertUtil;
+import jfract4d.gui.util.DialogUtil;
 import jfract4d.gui.util.FormatUtil;
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.user.Role;
@@ -87,11 +86,11 @@ public class NewUserController implements Initializable {
             JFract.getDataManager().getUserManager().addUser(new DiscordUser(id.getText(), (Role) role.getValue()));
             ((Stage) cancelBtn.getScene().getWindow()).close();
         } catch (SQLException ex) {
-            AlertUtil.exceptionDialog("Error", "Error adding user", ex.getMessage(), ex).showAndWait();
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            DialogUtil.exceptionDialog("Error", "Error adding user", ex.getMessage(), ex).showAndWait();
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedDiscordIDException ex) {
             Logger.getLogger(NewUserController.class.getName()).log(Level.SEVERE, null, ex);
-            AlertUtil.exceptionDialog("Error", "Malformed user ID", ex.getMessage(), ex).showAndWait();
+            DialogUtil.exceptionDialog("Error", "Malformed user ID", ex.getMessage(), ex).showAndWait();
         }
 
     }
@@ -127,8 +126,8 @@ public class NewUserController implements Initializable {
         try {
             role.getItems().addAll(JFract.getDataManager().getUserManager().getRoles());
         } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            AlertUtil.exceptionDialog("Error", "Error loading roles", ex.getMessage(), ex).showAndWait();
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            DialogUtil.exceptionDialog("Error", "Error loading roles", ex.getMessage(), ex).showAndWait();
         }
     }
 }
