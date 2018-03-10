@@ -44,11 +44,6 @@ public class NewInfractionCategoryController implements Initializable {
     private Button addBtn;
     
     @FXML
-    private void handleCancelBtn(ActionEvent event) {
-        ((Stage) cancelBtn.getScene().getWindow()).close();
-    }
-
-    @FXML
     private void OnBtnAddAction(ActionEvent event) {
         if (name.getText().length() == 0) {
             new Alert(Alert.AlertType.ERROR, "Please enter a name", ButtonType.OK).showAndWait();
@@ -67,7 +62,7 @@ public class NewInfractionCategoryController implements Initializable {
             ((Stage) cancelBtn.getScene().getWindow()).close();
         }catch (SQLException ex) {
             Logger.getLogger(NewRoleController.class.getName()).log(Level.SEVERE, null, ex);
-            DialogUtil.exceptionDialog("Error", "Error adding category", ex.getCause().getMessage(), ex).showAndWait();
+            DialogUtil.exceptionDialog("Error", "Error adding category", ex.getMessage(), ex).showAndWait();
         }
     }
 
@@ -78,5 +73,10 @@ public class NewInfractionCategoryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         pts.setTextFormatter(FormatUtil.getIntegerTextFormatter());
     }    
+
+    @FXML
+    private void CancelClick(ActionEvent event) {
+        ((Stage) cancelBtn.getScene().getWindow()).close();
+    }
     
 }

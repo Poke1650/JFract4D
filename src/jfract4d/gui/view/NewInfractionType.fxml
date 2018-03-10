@@ -13,9 +13,10 @@
       <TextField fx:id="name" layoutX="87.0" layoutY="27.0" />
       <Label layoutX="11.0" layoutY="68.0" text="Description:" />
       <TextArea fx:id="desc" layoutX="87.0" layoutY="68.0" prefHeight="95.0" prefWidth="282.0" />
-      <ComboBox fx:id="types" layoutX="87.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label layoutX="42.0" layoutY="192.0" text="Type:" />
+      <ComboBox fx:id="category" layoutX="87.0" layoutY="188.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="23.0" layoutY="192.0" text="Category:" />
       <Button fx:id="btnAddType" layoutX="300.0" layoutY="259.0" mnemonicParsing="false" onAction="#AddClick" text="Add Type" />
       <Button fx:id="btnCancel" layoutX="242.0" layoutY="259.0" mnemonicParsing="false" onAction="#CancelClick" text="Cancel" />
+      <Button fx:id="newCat" layoutX="250.0" layoutY="188.0" mnemonicParsing="false" onAction="#NewCatClick" text="New Category" />
    </children>
 </AnchorPane>

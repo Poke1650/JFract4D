@@ -2,7 +2,6 @@ package jfract4d.discord.infraction;
 
 import java.sql.SQLException;
 import java.util.Date;
-import jfract4d.discord.user.DiscordUser;
 import jfract4d.jfract.api.infraction.Infraction;
 import jfract4d.jfract.api.infraction.InfractionType;
 import jfract4d.jfract.api.user.User;
@@ -136,5 +135,12 @@ public class DiscordInfraction implements Infraction {
     public boolean isEffective() {
         return effective;
     }
+
+    @Override
+    public String toString() {
+        return id;
+    }
+    
+    
 
 }

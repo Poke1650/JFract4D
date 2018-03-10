@@ -221,7 +221,7 @@ public class NewInfractionController implements Initializable {
             ((Stage) btnCancel.getScene().getWindow()).close();
         } catch (SQLException ex) {
             Logger.getLogger(NewInfractionController.class.getName()).log(Level.SEVERE, null, ex);
-            DialogUtil.exceptionDialog("Error", "Error adding infraction", ex.getCause().getMessage(), ex).showAndWait();
+            DialogUtil.exceptionDialog("Error", "Error adding infraction", ex.getMessage(), ex).showAndWait();
         }
     }
 

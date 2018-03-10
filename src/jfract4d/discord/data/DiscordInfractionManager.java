@@ -134,7 +134,7 @@ public class DiscordInfractionManager implements InfractionManager {
     public void addInfractionType(InfractionType itype) throws SQLException {
         try (Connection conn = JFract.getDatabaseManager().getConnection()) {
 
-            String statement = "INSERT INTO infraction_type (name, description, catgegory) VALUES (?,?,?)";
+            String statement = "INSERT INTO infraction_type (name, description, category) VALUES (?,?,?)";
             PreparedStatement stat = conn.prepareStatement(statement);
 
             stat.setString(1, itype.getName());

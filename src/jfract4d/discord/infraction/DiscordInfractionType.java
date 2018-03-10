@@ -77,4 +77,11 @@ public class DiscordInfractionType implements InfractionType {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return name + " | " + getCategory().getPoints() + " pts | " + getCategory().getName();
+    }
+    
+    
+
 }

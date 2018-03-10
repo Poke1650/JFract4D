@@ -58,4 +58,11 @@ public class DiscordInfractionCategory implements InfractionCategory {
     public int getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return name + " | " + points + " pts";
+    }
+    
+    
 }

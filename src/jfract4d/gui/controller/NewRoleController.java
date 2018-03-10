@@ -88,7 +88,7 @@ public class NewRoleController implements Initializable {
             DialogUtil.exceptionDialog("Error adding role", "The ID is malformed", e.getMessage(), e).showAndWait();
         } catch (SQLException ex) {
             Logger.getLogger(NewRoleController.class.getName()).log(Level.SEVERE, null, ex);
-            DialogUtil.exceptionDialog("Error", "Error adding role", ex.getCause().getMessage(), ex).showAndWait();
+            DialogUtil.exceptionDialog("Error", "Error adding role", ex.getMessage(), ex).showAndWait();
         }
     }
 
