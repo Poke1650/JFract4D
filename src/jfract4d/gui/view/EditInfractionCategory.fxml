@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="121.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.EditInfractionCategoryController">
+   <children>
+      <Button fx:id="edit" layoutX="147.0" layoutY="81.0" mnemonicParsing="false" onAction="#onEdit" text="Edit category" />
+      <TextField fx:id="name" disable="true" editable="false" layoutX="58.0" layoutY="16.0" prefHeight="25.0" prefWidth="178.0" />
+      <Label layoutX="14.0" layoutY="20.0" text="Name:" textAlignment="RIGHT" />
+      <Label layoutX="14.0" layoutY="51.0" text="Points:" textAlignment="RIGHT" />
+      <TextField fx:id="pts" layoutX="58.0" layoutY="47.0" prefHeight="25.0" prefWidth="35.0" />
+      <Button fx:id="cancelBtn" layoutX="93.0" layoutY="81.0" mnemonicParsing="false" onAction="#CancelClick" text="Cancel" />
+   </children>
+</AnchorPane>

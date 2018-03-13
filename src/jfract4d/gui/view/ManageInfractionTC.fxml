@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.ManageInfractionController">
+    <children>
+      <TabPane prefHeight="443.0" prefWidth="353.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Type">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
+                     <children>
+                        <ListView fx:id="types" onMouseClicked="#InfractionmouseClickEvent" prefHeight="372.0" prefWidth="353.0" style="-fx-border-insets: 1;" />
+                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                           <items>
+                              <Button fx:id="btnAddType" onAction="#AddTypeClick" text="Add Type" />
+                              <Button fx:id="btnEditIType" onAction="#EditTypeClick" text="Edit Type" />
+                              <Button fx:id="btnRemoveType" mnemonicParsing="false" onAction="#RemoveTypeClick" text="Remove Type" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Category">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
+                     <children>
+                          <ListView fx:id="categories" onMouseClicked="#categoriesClick" prefHeight="372.0" prefWidth="648.0" />
+                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                           <items>
+                                <Button fx:id="btnAddCat" onAction="#AddCatClick" text="Add Category" />
+                              <Button fx:id="btnEditCat" mnemonicParsing="false" onAction="#EditCatClick" text="Edit Category" />
+                              <Button fx:id="btnRemoveCat" mnemonicParsing="false" onAction="#RemoveCatClick" text="Remove Category" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+    </children>
+</AnchorPane>
