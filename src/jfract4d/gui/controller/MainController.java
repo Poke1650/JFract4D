@@ -26,7 +26,6 @@ import javafx.scene.control.Button;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -53,7 +52,6 @@ public class MainController implements Initializable {
     @FXML
     private Button btnAddInfraction;
 
-
     @FXML
     private void AddInfractionClick(ActionEvent event) {
         try {
@@ -75,6 +73,9 @@ public class MainController implements Initializable {
 
     @FXML
     private void RemoveInfractionClick(ActionEvent event) {
+        if (infractions.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
         try {
             String id = infractions.getSelectionModel().getSelectedItem().getID();
             if (DialogUtil.confirm("Do you really want to remove infraction ID " + id + " ?")) {
@@ -84,7 +85,7 @@ public class MainController implements Initializable {
 
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-            DialogUtil.exceptionDialog("Error", "Error removing infraction", ex.getMessage(), ex).showAndWait();
+            DialogUtil.exceptionDialog("JFact4D - Error", "Error removing infraction", ex.getMessage(), ex).showAndWait();
         }
     }
 
@@ -112,6 +113,7 @@ public class MainController implements Initializable {
             EditInfractionController controller = fxmlLoader.getController();
             controller.setInfraction(infract);
             stage.showAndWait();
+
             loadInfractions();
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,12 +126,24 @@ public class MainController implements Initializable {
             btnEditInfraction.fire();
         }
     }
-    
+
     @FXML
     private Button btnManageTypeCat;
-    
+
     @FXML
     private void ManageTypeCatClick(ActionEvent event) {
+        try {
+            DialogUtil.makeStage(
+                    getClass().getClassLoader(),
+                    "ManageInfractionTC.fxml",
+                    "resources/icons/jfract.png",
+                    "Manage Infractions"
+            ).showAndWait();
+
+            loadUserList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -166,8 +180,14 @@ public class MainController implements Initializable {
 
     @FXML
     private void RemoveUserClick(ActionEvent event) {
+        User user = list.getSelectionModel().getSelectedItem();
+
+        if (list == null) {
+            new Alert(AlertType.ERROR, "Please select a user to remove").showAndWait();
+            return;
+        }
         try {
-            String id = list.getSelectionModel().getSelectedItem().getID();
+            String id = user.getID();
             if (DialogUtil.confirm("Do you really want to remove user ID " + id + " ?")) {
                 JFract.getDataManager().getUserManager().removeUser(id);
                 list.getItems().remove(list.getSelectionModel().getSelectedIndex());
@@ -247,7 +267,7 @@ public class MainController implements Initializable {
             infractions.getItems().addAll(data);
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-            DialogUtil.exceptionDialog("Error", "Error loading users", ex.getMessage(), ex).showAndWait();
+            DialogUtil.exceptionDialog("Error", "Error loading infractions", ex.getMessage(), ex).showAndWait();
         }
     }
 
