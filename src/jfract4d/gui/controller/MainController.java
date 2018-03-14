@@ -172,6 +172,29 @@ public class MainController implements Initializable {
 
     @FXML
     private void EditUserClick(ActionEvent event) {
+        try {
+            User user = list.getSelectionModel().getSelectedItem();
+
+            if (user == null) {
+                new Alert(AlertType.ERROR, "Please select a user to edit").showAndWait();
+                return;
+            }
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("jfract4d/gui/view/EditUser.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit user");
+            stage.setScene(new Scene(root1));
+            stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("resources/icons/jfract.png")));
+            EditUserController controller = fxmlLoader.getController();
+            controller.setUser(user);
+            stage.showAndWait();
+
+            loadUserList();
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

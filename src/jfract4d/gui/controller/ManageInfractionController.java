@@ -122,7 +122,31 @@ public class ManageInfractionController implements Initializable {
 
     @FXML
     private void EditTypeClick(ActionEvent event) {
+        try {
+            InfractionType type = types.getSelectionModel().getSelectedItem();
 
+            if (type == null) {
+                new Alert(Alert.AlertType.ERROR, "Please select a type to edit").showAndWait();
+                return;
+            }
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("jfract4d/gui/view/EditInfractionType.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Type");
+            stage.setScene(new Scene(root1));
+            stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("resources/icons/jfract.png")));
+            EditInfractionTypeController controller = fxmlLoader.getController();
+            controller.setType(type);
+            stage.showAndWait();
+
+            //Reload data
+            loadCategories();
+            loadTypes();
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -167,7 +191,7 @@ public class ManageInfractionController implements Initializable {
         try {
             InfractionCategory cat = categories.getSelectionModel().getSelectedItem();
 
-            if ( categories == null) {
+            if (cat == null) {
                 new Alert(Alert.AlertType.ERROR, "Please select a category to edit").showAndWait();
                 return;
             }
