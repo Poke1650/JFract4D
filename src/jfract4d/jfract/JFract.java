@@ -56,7 +56,7 @@ public class JFract {
      * @return the configuration manager
      */
     public static ConfigManager getConfigManager() {
-        if(state != States.READY) {
+        if(state == States.NOT_READY) {
             throw new RuntimeException("JFract is not ready! Be sure to call JFract.init first. Current state: " + state);
         }
         return configManager;
@@ -67,7 +67,7 @@ public class JFract {
      * @return the database manager
      */
     public static DatabaseManager getDatabaseManager() {
-        if(state != States.READY) {
+        if(state == States.NOT_READY) {
             throw new RuntimeException("Attempt to call JFract.getDatabaseManager() when not ready. Be sure to call JFract.init first. Current state: " + state);
         }
         return databaseManager;
