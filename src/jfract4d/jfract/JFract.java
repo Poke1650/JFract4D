@@ -51,6 +51,10 @@ public class JFract {
         state = States.READY;
     }
 
+    /**
+     * 
+     * @return the configuration manager
+     */
     public static ConfigManager getConfigManager() {
         if(state != States.READY) {
             throw new RuntimeException("JFract is not ready! Be sure to call JFract.init first. Current state: " + state);
@@ -58,6 +62,10 @@ public class JFract {
         return configManager;
     }
 
+    /**
+     * 
+     * @return the database manager
+     */
     public static DatabaseManager getDatabaseManager() {
         if(state != States.READY) {
             throw new RuntimeException("Attempt to call JFract.getDatabaseManager() when not ready. Be sure to call JFract.init first. Current state: " + state);
@@ -65,6 +73,10 @@ public class JFract {
         return databaseManager;
     }
 
+    /**
+     * 
+     * @return the data manager
+     */
     public static DataManager getDataManager() {
         if(state != States.READY) {
             throw new RuntimeException("Attempt to call JFract.getDataManager() when not ready. Be sure to call JFract.init first. Current state: " + state);
@@ -72,6 +84,10 @@ public class JFract {
         return dataManager;
     }
 
+    /**
+     * Registers a datamanager to be used by JFract
+     * @param dm the datamanager
+     */
     public static void registerDataManager(DataManager dm) {
         if (state != States.READY) {
             throw new RuntimeException("Attempted to register DataManager when not ready. Be sure to call JFract.init first. Current state: " + state);
