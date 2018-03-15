@@ -15,8 +15,11 @@ public class DatabaseManager {
     /**
      * Initializes the data source.
      *
-     * @param configPath the name of the property file that contains the
-     * database driver, URL, username, and password
+     * @param driver
+     * @param url
+     * @param username
+     * @param password
+     * @throws java.io.IOException
      */
     public void init(String driver, String url, String username, String password) throws IOException, ClassNotFoundException {
         this.url = url;
@@ -37,6 +40,8 @@ public class DatabaseManager {
 
     /**
      * Initializes the data source using the ConfigManager
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
     public void init() throws IOException, ClassNotFoundException {
 
@@ -49,6 +54,7 @@ public class DatabaseManager {
      * Gets a connection to the database.
      *
      * @return the database connection
+     * @throws java.sql.SQLException
      */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);

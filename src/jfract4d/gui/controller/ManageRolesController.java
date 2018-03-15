@@ -55,6 +55,7 @@ public class ManageRolesController implements Initializable {
     }
 
     private void loadRoles() {
+        roles.getItems().clear();
         try {
             roles.getItems().addAll(JFract.getDataManager().getUserManager().getRoles());
         } catch (SQLException ex) {

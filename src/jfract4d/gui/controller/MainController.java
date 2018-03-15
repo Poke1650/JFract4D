@@ -140,7 +140,7 @@ public class MainController implements Initializable {
                     "Manage Infractions"
             ).showAndWait();
 
-            loadUserList();
+            loadInfractions();
         } catch (IOException e) {
             e.printStackTrace();
         }

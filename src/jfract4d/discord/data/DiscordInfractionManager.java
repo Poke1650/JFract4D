@@ -306,20 +306,20 @@ public class DiscordInfractionManager implements InfractionManager {
         }
     }
 
-    private final String INFRACTION_QUERY = "SELECT infraction.id,"
-            + " infraction.giver, ugiver.role as 'grid', rgiver.name AS 'grn', rgiver.level as 'grl',"
-            + " infraction.user, utarget.role as 'trid', rtarget.name AS 'trn', rtarget.level as 'trl',"
+    private static final String INFRACTION_QUERY = "SELECT infraction.id,"
+            + " infraction.giver, ugiver.role AS 'grid', rgiver.name AS 'grn', rgiver.level AS 'grl',"
+            + " infraction.user, utarget.role AS 'trid', rtarget.name AS 'trn', rtarget.level AS 'trl',"
             + " infraction.time,"
             + " itype.id AS 'itid', itype.name AS 'itypename', itype.description AS 'itypedesc',"
             + " icat.id AS 'icatid', icat.name AS 'icatname', icat.points AS 'icatpoint',"
             + " infraction.effective"
             + " FROM infraction"
-            + " LEFT JOIN user ugiver ON infraction.giver = ugiver.discord_id"
-            + " LEFT JOIN user utarget ON infraction.user = utarget.discord_id"
-            + " LEFT JOIN role rgiver ON ugiver.role = rgiver.id"
-            + " LEFT JOIN role rtarget ON utarget.role = rtarget.id"
-            + " LEFT JOIN infraction_type itype ON infraction.infraction_type = itype.id"
-            + " LEFT JOIN infraction_category icat ON itype.category = icat.id";
+            + " JOIN user ugiver ON infraction.giver = ugiver.discord_id"
+            + " JOIN user utarget ON infraction.user = utarget.discord_id"
+            + " JOIN role rgiver ON ugiver.role = rgiver.id"
+            + " JOIN role rtarget ON utarget.role = rtarget.id"
+            + " JOIN infraction_type itype ON infraction.infraction_type = itype.id"
+            + " JOIN infraction_category icat ON itype.category = icat.id";
 
     @Override
     public Infraction getInfraction(String id) throws SQLException {
