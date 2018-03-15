@@ -1,6 +1,7 @@
 package jfract4d.jfract.api.user;
 
 /**
+ * A user on the platform
  *
  * @author Antoine Gagnon
  */

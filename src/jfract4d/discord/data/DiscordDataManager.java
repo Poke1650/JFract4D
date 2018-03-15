@@ -5,7 +5,7 @@ import jfract4d.jfract.api.data.InfractionManager;
 import jfract4d.jfract.api.data.UserManager;
 
 /**
- *
+ * Container for all data managers
  * @author Antoine Gagnon
  */
 public class DiscordDataManager implements DataManager {

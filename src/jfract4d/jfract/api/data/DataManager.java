@@ -6,7 +6,7 @@
 package jfract4d.jfract.api.data;
 
 /**
- *
+ * Container for every data manager
  * @author Antoine Gagnon
  */
 public interface DataManager {

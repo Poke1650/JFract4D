@@ -6,23 +6,42 @@ import jfract4d.jfract.core.ConfigManager;
 import jfract4d.jfract.core.DatabaseManager;
 
 /**
- *
+ * Interface to the JFract API
+ * 
  * @author Antoine Gagnon
  */
 public class JFract {
 
+    /**
+     * Current state of the API
+     */
     private static States state = States.NOT_READY;
 
+    /**
+     * ConfigManager for the API
+     */
     private static ConfigManager configManager;
 
+    /**
+     * Database manager for the API
+     */
     private static DatabaseManager databaseManager;
 
+    /**
+     * Data manager registered to the API
+     */
     private static DataManager dataManager;
 
+    /**
+     * Initialize the components of the API
+     * You MUST call that before using anything else
+     * @param configPath
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     public static void init(String configPath) throws IOException, ClassNotFoundException {
         state = States.INITIALISING;
 
-        //Do some check here if first launch -> setup database
         configManager = new ConfigManager();
         configManager.load(configPath);
 
@@ -33,21 +52,29 @@ public class JFract {
     }
 
     public static ConfigManager getConfigManager() {
+        if(state != States.READY) {
+            throw new RuntimeException("JFract is not ready! Be sure to call JFract.init first. Current state: " + state);
+        }
         return configManager;
     }
 
     public static DatabaseManager getDatabaseManager() {
+        if(state != States.READY) {
+            throw new RuntimeException("Attempt to call JFract.getDatabaseManager() when not ready. Be sure to call JFract.init first. Current state: " + state);
+        }
         return databaseManager;
     }
 
     public static DataManager getDataManager() {
+        if(state != States.READY) {
+            throw new RuntimeException("Attempt to call JFract.getDataManager() when not ready. Be sure to call JFract.init first. Current state: " + state);
+        }
         return dataManager;
     }
 
-    public static void registerDataManager(DataManager dm) throws Exception {
-
+    public static void registerDataManager(DataManager dm) {
         if (state != States.READY) {
-            throw new Exception("Attempted to register DataManager before initialising JFraft, call JFract.init first! Current state = " + state);
+            throw new RuntimeException("Attempted to register DataManager when not ready. Be sure to call JFract.init first. Current state: " + state);
         }
         dataManager = dm;
     }

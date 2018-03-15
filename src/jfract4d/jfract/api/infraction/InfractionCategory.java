@@ -1,6 +1,9 @@
 package jfract4d.jfract.api.infraction;
 
 /**
+ * A category in which an {@link InfractionType} is. This is mostly to sort the
+ * {@link InfractionType} by how serious it is as every categories has a point
+ * value associated with it
  *
  * @author Antoine Gagnon
  */

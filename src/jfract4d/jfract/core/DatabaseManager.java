@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.io.IOException;
 import jfract4d.jfract.JFract;
 
+/**
+ * Interacts with the Database directly
+ *
+ * @author Antoine Gagnon
+ */
 public class DatabaseManager {
 
     private String url;
@@ -40,6 +45,7 @@ public class DatabaseManager {
 
     /**
      * Initializes the data source using the ConfigManager
+     *
      * @throws java.io.IOException
      * @throws java.lang.ClassNotFoundException
      */

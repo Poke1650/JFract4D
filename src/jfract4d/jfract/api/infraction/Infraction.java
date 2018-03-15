@@ -4,6 +4,7 @@ import java.util.Date;
 import jfract4d.jfract.api.user.User;
 
 /**
+ * An Infraction record given to someone by someone
  *
  * @author Antoine Gagnon
  */

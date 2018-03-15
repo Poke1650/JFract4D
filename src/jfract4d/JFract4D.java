@@ -46,15 +46,10 @@ public class JFract4D extends Application {
             JFract.init("jfract.properties");
 
             JFract.registerDataManager(new DiscordDataManager());
-
-            UserManager uManager = JFract.getDataManager().getUserManager();
-            InfractionManager iManager = JFract.getDataManager().getInfractionManager();
-      
+            
         } catch (IOException ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedDiscordIDException ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);

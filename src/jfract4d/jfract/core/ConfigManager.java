@@ -13,7 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Manager for the API configuration file
+ * Wrapper around the {@link Properties} class with added functionality like
+ * being able to write to file from which is was loaded directly
  *
  * @author Antoine Gagnon
  */

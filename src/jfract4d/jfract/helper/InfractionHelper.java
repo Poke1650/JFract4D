@@ -8,6 +8,7 @@ import jfract4d.discord.util.FormatHelper;
 import jfract4d.jfract.JFract;
 
 /**
+ * Set of methods to help with the generation of unique IDs for the infractions
  *
  * @author Antoine Gagnon
  */

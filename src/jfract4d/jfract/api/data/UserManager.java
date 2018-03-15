@@ -11,7 +11,10 @@ import jfract4d.jfract.api.user.Role;
 import jfract4d.jfract.api.user.User;
 
 /**
- *
+ * Class that manage users and roles
+ * Methods throw an SQLException as this is meant to be implemented using an SQL
+ * Database but something else can be used in the implementation (NOSQL
+ * database, JSON/XML files etc...)
  * @author Antoine Gagnon
  */
 public interface UserManager {

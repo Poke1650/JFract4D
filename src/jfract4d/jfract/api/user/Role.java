@@ -1,6 +1,8 @@
 package jfract4d.jfract.api.user;
 
 /**
+ * The Role of a user in the community or server, can be used to establish a
+ * hierarchy between the users and staff members
  *
  * @author Antoine Gagnon
  */

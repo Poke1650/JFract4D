@@ -1,7 +1,7 @@
 package jfract4d.jfract.api.infraction;
 
 /**
- *
+ * Specific case that leads to an infraction being given
  * @author Antoine Gagnon
  */
 public interface InfractionType {

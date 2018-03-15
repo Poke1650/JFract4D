@@ -14,6 +14,10 @@ import jfract4d.jfract.api.infraction.InfractionType;
 import jfract4d.jfract.api.user.User;
 
 /**
+ * Class that manage infraction, infraction types and infraction category
+ * Methods throw an SQLException as this is meant to be implemented using an SQL
+ * Database but something else can be used in the implementation (NOSQL
+ * database, JSON/XML files etc...)
  *
  * @author Antoine Gagnon
  */
@@ -103,13 +107,14 @@ public interface InfractionManager {
      * @throws java.sql.SQLException
      */
     void updateInfractionType(String name, InfractionType updatedIType) throws SQLException;
-    
+
     /**
      * Updates the infraction type going by the id given from the updateIType
      * passed
+     *
      * @param id
      * @param updatedIType
-     * @throws SQLException 
+     * @throws SQLException
      */
     void updateInfractionType(int id, InfractionType updatedIType) throws SQLException;
 
@@ -121,7 +126,7 @@ public interface InfractionManager {
      * @throws java.sql.SQLException
      */
     void removeInfractionType(String name) throws SQLException;
-    
+
     /**
      * Removes an infraction type this will cause every infraction going by that
      * type to UNDEFINED
@@ -216,7 +221,7 @@ public interface InfractionManager {
     void removeInfraction(String id) throws SQLException;
 
     /**
-     * Changes the effectivness of an infraction
+     * Changes the effectiveness of an infraction
      *
      * @param id
      * @param effective
