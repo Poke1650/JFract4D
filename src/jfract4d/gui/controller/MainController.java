@@ -205,7 +205,7 @@ public class MainController implements Initializable {
     private void RemoveUserClick(ActionEvent event) {
         User user = list.getSelectionModel().getSelectedItem();
 
-        if (list == null) {
+        if (user == null) {
             new Alert(AlertType.ERROR, "Please select a user to remove").showAndWait();
             return;
         }
@@ -227,7 +227,18 @@ public class MainController implements Initializable {
 
     @FXML
     private void ManageRolesClick(ActionEvent event) {
+        try {
+            DialogUtil.makeStage(
+                    getClass().getClassLoader(),
+                    "ManageRoles.fxml",
+                    "resources/icons/jfract.png",
+                    "Manage Roles"
+            ).showAndWait();
 
+            loadUserList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -304,6 +315,13 @@ public class MainController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             DialogUtil.exceptionDialog("Error", "Error loading users", ex.getMessage(), ex).showAndWait();
+        }
+    }
+
+    @FXML
+    private void userListClicked(MouseEvent event) {
+        if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
+            btnEditUser.fire();
         }
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.ManageRolesController">
+    <children>
+      <TabPane prefHeight="443.0" prefWidth="353.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Roles">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
+                     <children>
+                        <ListView fx:id="roles" onMouseClicked="#rolesClicked" prefHeight="372.0" prefWidth="353.0" style="-fx-border-insets: 1;" />
+                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                           <items>
+                              <Button fx:id="btnAddRole" onAction="#addRoleClick" text="Add Role" />
+                              <Button fx:id="btnEditRole" onAction="#editRoleClick" text="Edit Role" />
+                              <Button fx:id="btnRemoveRole" mnemonicParsing="false" onAction="#removeRoleClick" text="Remove Role" />
+                           </items>
+                        </ToolBar>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+    </children>
+</AnchorPane>

@@ -31,7 +31,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
                      <children>
-                          <ListView fx:id="list" prefHeight="372.0" prefWidth="648.0" />
+                          <ListView fx:id="list" onMouseClicked="#userListClicked" prefHeight="372.0" prefWidth="648.0" />
                         <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
                            <items>
                                 <Button fx:id="btnAddUser" onAction="#AddUserClick" text="Add User" />
