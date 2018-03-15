@@ -13,7 +13,7 @@
 
 *.ctxt
 
-
+\out\*
 
 # Mobile Tools for Java (J2ME)
 
@@ -41,3 +41,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+out/production/
