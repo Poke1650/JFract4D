@@ -8,6 +8,7 @@ package jfract4d.discord.user;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jfract4d.discord.exception.MalformedDiscordIDException;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.user.Role;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -50,7 +51,7 @@ public class DiscordRoleTest {
     public void testConstructor() {
         try {
             DiscordRole goodRole = new DiscordRole("375764853895462912", "Admin", 0);
-        } catch (MalformedDiscordIDException e) {
+        } catch (MalformedIDException e) {
             fail(e.getMessage());
         }
 
@@ -93,7 +94,7 @@ public class DiscordRoleTest {
         DiscordRole instance = null;
         try {
             instance = new DiscordRole("375764853895462912", "Admin", 0);
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordRoleTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -108,7 +109,7 @@ public class DiscordRoleTest {
         DiscordRole instance = null;
         try {
             instance = new DiscordRole("375764853895462912", "Admin", 0);
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordRoleTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -130,7 +131,7 @@ public class DiscordRoleTest {
             higher = new DiscordRole("375764853895462912", "Admin", 2);
             equal = new DiscordRole("375764853895462912", "Admin", 1);
             lower = new DiscordRole("375764853895462912", "Admin", 0);
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordRoleTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -147,7 +148,7 @@ public class DiscordRoleTest {
         DiscordRole instance = null;
         try {
             instance = new DiscordRole("375764853895462912", "Admin", 0);
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordRoleTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
