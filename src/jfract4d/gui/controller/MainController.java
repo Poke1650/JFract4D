@@ -63,6 +63,7 @@ public class MainController implements Initializable {
             ).showAndWait();
 
             loadInfractions();
+            loadUserList();
         } catch (IOException e) {
             e.printStackTrace();
         }

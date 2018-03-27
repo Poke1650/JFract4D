@@ -14,8 +14,6 @@ import jfract4d.discord.data.DiscordDataManager;
 
 import jfract4d.jfract.JFract;
 
-
-
 /**
  * @author Antoine Gagnon
  */
