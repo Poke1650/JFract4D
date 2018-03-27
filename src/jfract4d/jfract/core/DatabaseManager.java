@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.io.IOException;
+import java.util.logging.Level;
 import jfract4d.jfract.JFract;
 
 /**
@@ -41,6 +42,7 @@ public class DatabaseManager {
         if (driver != null) {
             Class.forName(driver);
         }
+        JFract.LOGGER.log(Level.INFO, "Database manager registred for {0} using driver {1}", new Object[]{url, driver});
     }
 
     /**
@@ -52,7 +54,7 @@ public class DatabaseManager {
     public void init() throws IOException, ClassNotFoundException {
 
         ConfigManager cf = JFract.getConfigManager();
-
+        
         this.init(cf.get("jdbc.driver"), cf.get("jdbc.url"), cf.get("jdbc.username"), cf.get("jdbc.password"));
     }
 

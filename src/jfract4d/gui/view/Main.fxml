@@ -6,16 +6,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.MainController">
+<AnchorPane id="AnchorPane" prefHeight="627.0" prefWidth="493.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jfract4d.gui.controller.MainController">
     <children>
-      <TabPane prefHeight="443.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="627.0" prefWidth="501.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Infraction">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="504.0">
                      <children>
-                        <ListView fx:id="infractions" onMouseClicked="#InfractionmouseClickEvent" prefHeight="372.0" prefWidth="648.0" style="-fx-border-insets: 1;" />
-                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                        <ListView id="infraction" fx:id="infractions" onMouseClicked="#InfractionmouseClickEvent" prefHeight="556.0" prefWidth="500.0" style="-fx-border-insets: 1;" stylesheets="@main.css" />
+                        <ToolBar layoutY="555.0" prefHeight="43.0" prefWidth="500.0" style="-fx-background-color: #9da1aa;">
                            <items>
                               <Button fx:id="btnAddInfraction" onAction="#AddInfractionClick" text="Add Infraction" />
                               <Button fx:id="btnEditInfraction" onAction="#EditInfractionClick" text="Edit Infraction" />
@@ -31,8 +31,8 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="390.0">
                      <children>
-                          <ListView fx:id="list" onMouseClicked="#userListClicked" prefHeight="372.0" prefWidth="648.0" />
-                        <ToolBar layoutY="371.0" prefHeight="43.0" prefWidth="648.0" style="-fx-background-color: #9da1aa;">
+                          <ListView fx:id="list" onMouseClicked="#userListClicked" prefHeight="555.0" prefWidth="501.0" stylesheets="@main.css" />
+                        <ToolBar layoutY="555.0" prefHeight="43.0" prefWidth="501.0" style="-fx-background-color: #9da1aa;">
                            <items>
                                 <Button fx:id="btnAddUser" onAction="#AddUserClick" text="Add User" />
                               <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#EditUserClick" text="Edit User" />

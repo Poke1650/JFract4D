@@ -11,17 +11,17 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jfract4d.discord.data.DiscordDataManager;
-import jfract4d.discord.exception.MalformedDiscordIDException;
 
 import jfract4d.jfract.JFract;
-import jfract4d.jfract.api.data.InfractionManager;
-import jfract4d.jfract.api.data.UserManager;
+
 
 
 /**
  * @author Antoine Gagnon
  */
 public class JFract4D extends Application {
+    
+    public static final Logger LOGGER = Logger.getLogger("JFract4D");
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -43,16 +43,13 @@ public class JFract4D extends Application {
     public static void main(String[] args) {
 
         try {
+            
             JFract.init("jfract.properties");
 
             JFract.registerDataManager(new DiscordDataManager());
             
-        } catch (IOException ex) {
-            Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(JFract4D.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException  ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
         }
 
         launch(args);

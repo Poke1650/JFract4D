@@ -24,6 +24,7 @@ import jfract4d.discord.user.DiscordRole;
 import jfract4d.gui.util.DialogUtil;
 import jfract4d.gui.util.FormatUtil;
 import jfract4d.jfract.JFract;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.user.Role;
 
 /**
@@ -77,7 +78,7 @@ public class EditRoleController implements Initializable {
                     new DiscordRole(id.getText(), name.getText(), Integer.valueOf(level.getText()))
             );
             ((Stage) cancelBtn.getScene().getWindow()).close();
-        } catch (MalformedDiscordIDException e) {
+        } catch (MalformedIDException e) {
             DialogUtil.exceptionDialog("Error updating role", "The ID is malformed, if you see this it means that someone manually put a malformed ID in the database", e.getMessage(), e).showAndWait();
         } catch (SQLException ex) {
             Logger.getLogger(NewRoleController.class.getName()).log(Level.SEVERE, null, ex);

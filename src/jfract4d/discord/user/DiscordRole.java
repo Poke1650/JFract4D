@@ -2,53 +2,28 @@ package jfract4d.discord.user;
 
 import jfract4d.discord.exception.MalformedDiscordIDException;
 import jfract4d.discord.util.FormatHelper;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.user.Role;
+import jfract4d.jfract.api.user.impl.RoleImpl;
 
 /**
- *
+ * Implementation of a Role for Discord
  * @author Antoine Gagnon
  */
-public class DiscordRole implements Role {
+public class DiscordRole extends RoleImpl {
 
-    String name;
-    int level;
-    String id;
+    public DiscordRole(String id, String name, int level) throws MalformedIDException {
+        super(id, name, level);
+    }
 
-    public DiscordRole(String id, String name, int level) throws MalformedDiscordIDException {
-        this.name = name;
-        this.level = level;
-
+    @Override
+    protected void setID(String id) throws MalformedIDException {
         if (!FormatHelper.isValidID(id)) {
             throw new MalformedDiscordIDException(id);
         }
-
-        this.id = id;
-
+        super.setID(id);
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getLevel() {
-        return level;
-    }
-
-    @Override
-    public int compareTo(Role o) {
-        return getLevel() > o.getLevel() ? 1 : getLevel() < o.getLevel() ? -1 : 0;
-    }
-
-    @Override
-    public String getID() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Name: %s LvL: %s ID: %s", getName(), getLevel(), getID());
-    }
+    
 
 }

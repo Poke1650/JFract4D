@@ -1,12 +1,12 @@
-package jfract4d.discord.infraction;
+package jfract4d.jfract.api.infraction.impl;
 
 import jfract4d.jfract.api.infraction.InfractionCategory;
 
 /**
- *
+ * Basic Implementation of an infraction category
  * @author Antoine Gagnon
  */
-public class DiscordInfractionCategory implements InfractionCategory {
+public class InfractionCategoryImpl implements InfractionCategory {
 
     /**
      * Name of the infraction
@@ -24,12 +24,12 @@ public class DiscordInfractionCategory implements InfractionCategory {
      */
     private int id = -1;
 
-    public DiscordInfractionCategory(String name, int points) {
+    public InfractionCategoryImpl(String name, int points) {
         this.name = name.toLowerCase();
         this.points = points;
     }
 
-    public DiscordInfractionCategory(int id, String name, int points) {
+    public InfractionCategoryImpl(int id, String name, int points) {
         this.name = name.toLowerCase();
         this.points = points;
         setID(id);

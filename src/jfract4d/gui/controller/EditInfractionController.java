@@ -31,7 +31,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import jfract4d.discord.infraction.DiscordInfraction;
+import jfract4d.jfract.api.infraction.impl.InfractionImpl;
 import jfract4d.gui.util.DialogUtil;
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.infraction.Infraction;
@@ -180,9 +180,8 @@ public class EditInfractionController implements Initializable {
         time = cal.getTime();
 
         try {
-            JFract.getDataManager().getInfractionManager().updateInfraction(
-                    infraction.getID(),
-                    new DiscordInfraction(infraction.getID(), giver.getValue(), target.getValue(), time, type.getValue(), effective.isSelected())
+            JFract.getDataManager().getInfractionManager().updateInfraction(infraction.getID(),
+                    new InfractionImpl(infraction.getID(), giver.getValue(), target.getValue(), time, type.getValue(), effective.isSelected())
             );
             ((Stage) btnCancel.getScene().getWindow()).close();
         } catch (SQLException ex) {

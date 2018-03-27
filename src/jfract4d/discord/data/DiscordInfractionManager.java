@@ -11,14 +11,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jfract4d.discord.exception.MalformedDiscordIDException;
-import jfract4d.discord.infraction.DiscordInfraction;
-import jfract4d.discord.infraction.DiscordInfractionCategory;
-import jfract4d.discord.infraction.DiscordInfractionType;
+import jfract4d.jfract.api.infraction.impl.InfractionImpl;
+import jfract4d.jfract.api.infraction.impl.InfractionCategoryImpl;
+import jfract4d.jfract.api.infraction.impl.InfractionTypeImpl;
 import jfract4d.discord.user.DiscordRole;
 import jfract4d.discord.user.DiscordUser;
 import jfract4d.jfract.JFract;
 
 import jfract4d.jfract.api.data.InfractionManager;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.infraction.Infraction;
 import jfract4d.jfract.api.infraction.InfractionCategory;
 import jfract4d.jfract.api.infraction.InfractionType;
@@ -26,7 +27,7 @@ import jfract4d.jfract.api.user.User;
 import jfract4d.jfract.helper.DateHelper;
 
 /**
- *
+ *  Infraction Manager implementation for
  * @author Antoine Gagnon
  */
 public class DiscordInfractionManager implements InfractionManager {
@@ -61,7 +62,7 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             if (rs.next()) {
-                return new DiscordInfractionCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("points"));
+                return new InfractionCategoryImpl(rs.getInt("id"), rs.getString("name"), rs.getInt("points"));
             }
 
         }
@@ -78,7 +79,7 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             if (rs.next()) {
-                return new DiscordInfractionCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("points"));
+                return new InfractionCategoryImpl(rs.getInt("id"), rs.getString("name"), rs.getInt("points"));
             }
 
         }
@@ -95,7 +96,7 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfractionCategory(rs.getInt("id"), rs.getString("name"), rs.getInt("points")));
+                list.add(new InfractionCategoryImpl(rs.getInt("id"), rs.getString("name"), rs.getInt("points")));
             }
 
         }
@@ -157,10 +158,10 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             if (rs.next()) {
-                return new DiscordInfractionType(
+                return new InfractionTypeImpl(
                         rs.getString("name"),
                         rs.getString("description"),
-                        new DiscordInfractionCategory(
+                        new InfractionCategoryImpl(
                                 rs.getInt("category"),
                                 rs.getString("c_name"),
                                 rs.getInt("points")
@@ -184,10 +185,10 @@ public class DiscordInfractionManager implements InfractionManager {
 
             //TODO: make a DiscordInfractionTypeBuilder
             if (rs.next()) {
-                return new DiscordInfractionType(
+                return new InfractionTypeImpl(
                         rs.getString("name"),
                         rs.getString("description"),
-                        new DiscordInfractionCategory(
+                        new InfractionCategoryImpl(
                                 rs.getInt("category"),
                                 rs.getString("c_name"),
                                 rs.getInt("points")
@@ -208,10 +209,10 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfractionType(
+                list.add(new InfractionTypeImpl(
                         rs.getString("name"),
                         rs.getString("description"),
-                        new DiscordInfractionCategory(
+                        new InfractionCategoryImpl(
                                 rs.getInt("category"),
                                 rs.getString("c_name"),
                                 rs.getInt("points")
@@ -332,19 +333,19 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             if (rs.next()) {
-                return new DiscordInfraction(
+                return new InfractionImpl(
                         id,
                         new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
                         new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
                         rs.getDate("time"),
-                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
-                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        new InfractionTypeImpl(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new InfractionCategoryImpl(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
                         rs.getBoolean("effective")
                 );
             }
 
-        } catch (MalformedDiscordIDException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedIDException ex) {
+            JFract.LOGGER.log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -362,19 +363,19 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfraction(
+                list.add(new InfractionImpl(
                         rs.getString("id"),
                         new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
                         new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
                         rs.getDate("time"),
-                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
-                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        new InfractionTypeImpl(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new InfractionCategoryImpl(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
                         rs.getBoolean("effective")
                 ));
             }
 
-        } catch (MalformedDiscordIDException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedIDException ex) {
+            JFract.LOGGER.log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -391,19 +392,19 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfraction(
+                list.add(new InfractionImpl(
                         rs.getString("id"),
                         new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
                         new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
                         rs.getDate("time"),
-                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
-                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        new InfractionTypeImpl(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new InfractionCategoryImpl(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
                         rs.getBoolean("effective")
                 ));
             }
 
-        } catch (MalformedDiscordIDException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedIDException ex) {
+            JFract.LOGGER.log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -421,19 +422,19 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfraction(
+                list.add(new InfractionImpl(
                         rs.getString("id"),
                         new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
                         new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
                         rs.getDate("time"),
-                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
-                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        new InfractionTypeImpl(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new InfractionCategoryImpl(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
                         rs.getBoolean("effective")
                 ));
             }
 
-        } catch (MalformedDiscordIDException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedIDException ex) {
+            JFract.LOGGER.log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -451,19 +452,19 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfraction(
+                list.add(new InfractionImpl(
                         rs.getString("id"),
                         new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
                         new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
                         rs.getDate("time"),
-                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
-                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        new InfractionTypeImpl(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new InfractionCategoryImpl(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
                         rs.getBoolean("effective")
                 ));
             }
 
-        } catch (MalformedDiscordIDException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedIDException ex) {
+            JFract.LOGGER.log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -478,19 +479,19 @@ public class DiscordInfractionManager implements InfractionManager {
             ResultSet rs = stat.executeQuery();
 
             while (rs.next()) {
-                list.add(new DiscordInfraction(
+                list.add(new InfractionImpl(
                         rs.getString("id"),
                         new DiscordUser(rs.getString("giver"), new DiscordRole(rs.getString("grid"), rs.getString("grn"), rs.getInt("grl"))),
                         new DiscordUser(rs.getString("user"), new DiscordRole(rs.getString("trid"), rs.getString("trn"), rs.getInt("trl"))),
                         rs.getDate("time"),
-                        new DiscordInfractionType(rs.getString("itypename"), rs.getString("itypedesc"),
-                                new DiscordInfractionCategory(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
+                        new InfractionTypeImpl(rs.getString("itypename"), rs.getString("itypedesc"),
+                                new InfractionCategoryImpl(rs.getInt("icatid"), rs.getString("icatname"), rs.getInt("icatpoint"))).withID(rs.getInt("itid")),
                         rs.getBoolean("effective")
                 ));
             }
 
-        } catch (MalformedDiscordIDException ex) {
-            Logger.getLogger(DiscordInfractionManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedIDException ex) {
+            JFract.LOGGER.log(Level.SEVERE, null, ex);
         }
         return list;
     }

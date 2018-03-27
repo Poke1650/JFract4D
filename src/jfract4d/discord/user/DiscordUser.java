@@ -1,70 +1,29 @@
 package jfract4d.discord.user;
 
 import jfract4d.discord.util.FormatHelper;
-import jfract4d.discord.exception.MalformedDiscordIDException;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.user.Role;
-import jfract4d.jfract.api.user.User;
+import jfract4d.jfract.api.user.impl.UserImpl;
 
 /**
- *
+ * Implementation of a discord user
  * @author Antoine Gagnon
  */
-public class DiscordUser implements User {
+public class DiscordUser extends UserImpl {
 
-    /**
-     * Role of the user
-     */
-    private Role role;
-
-    /**
-     * ID of the user, 18 char numeric string
-     */
-    private String id;
-
-    public DiscordUser(String discordID, Role role) throws MalformedDiscordIDException {
-        setID(discordID);
-        setRole(role);
+    public DiscordUser(String id, Role role) throws MalformedIDException {
+        super(id, role);
     }
+    
+    public DiscordUser(String id) throws MalformedIDException {
+        super(id);
+    }    
 
-    public DiscordUser(String discordID) throws MalformedDiscordIDException {
-        setID(discordID);
-    }
-
-    private void setID(String discordID) throws MalformedDiscordIDException {
+    @Override
+    protected void setID(String discordID) throws MalformedIDException {
         if (!FormatHelper.isValidID(discordID)) {
-            throw new MalformedDiscordIDException(discordID);
+            throw new MalformedIDException(discordID);
         }
-
-        this.id = discordID;
-    }
-
-    @Override
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
-    public Role getRole() {
-        return this.role;
-    }
-
-    @Override
-    public String getID() {
-        return this.id;
-    }
-
-    @Override
-    public int compareTo(User o) {
-
-        return o.getRole() == null && this.role == null ? 0
-                : o.getRole() != null && this.role == null ? -1
-                : o.getRole() == null && this.role != null ? 0
-                : this.role.compareTo(o.getRole());
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s  |  Role: %s", getID(), getRole().getName());
-    }
-
+        super.setID(discordID);
+    }    
 }

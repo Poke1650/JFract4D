@@ -32,7 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import jfract4d.discord.infraction.DiscordInfraction;
+import jfract4d.jfract.api.infraction.impl.InfractionImpl;
 import jfract4d.gui.util.DialogUtil;
 import jfract4d.gui.util.FormatUtil;
 import jfract4d.jfract.JFract;
@@ -215,8 +215,7 @@ public class NewInfractionController implements Initializable {
         }
 
         try {
-            JFract.getDataManager().getInfractionManager().addInfraction(
-                    new DiscordInfraction(InfractionHelper.getNextInfractionID(), giver.getValue(), target.getValue(), time, type.getValue(), true)
+            JFract.getDataManager().getInfractionManager().addInfraction(new InfractionImpl(InfractionHelper.getNextInfractionID(), giver.getValue(), target.getValue(), time, type.getValue(), true)
             );
             ((Stage) btnCancel.getScene().getWindow()).close();
         } catch (SQLException ex) {

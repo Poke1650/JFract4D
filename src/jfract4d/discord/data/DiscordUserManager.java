@@ -14,11 +14,12 @@ import jfract4d.discord.user.DiscordRole;
 import jfract4d.discord.user.DiscordUser;
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.data.UserManager;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.user.Role;
 import jfract4d.jfract.api.user.User;
 
 /**
- *
+ * User manager implementation for Discord users
  * @author Antoine Gagnon
  */
 public class DiscordUserManager implements UserManager {
@@ -124,7 +125,7 @@ public class DiscordUserManager implements UserManager {
                     }
 
                     list.add(usr);
-                } catch (MalformedDiscordIDException ex) {
+                } catch (MalformedIDException ex) {
                     Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -151,7 +152,7 @@ public class DiscordUserManager implements UserManager {
             if (result.next()) {
                 return new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level"));
             }
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -171,7 +172,7 @@ public class DiscordUserManager implements UserManager {
                 return new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level"));
             }
 
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -224,7 +225,7 @@ public class DiscordUserManager implements UserManager {
                 list.add(new DiscordRole(result.getString("id"), result.getString("name"), result.getInt("level")));
             }
 
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(DiscordUserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;

@@ -1,0 +1,8 @@
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #0033ff;
+    -fx-text-fill: white;
+}
+
+.list-cell:even {
+    -fx-background-color: #cccccc
+}

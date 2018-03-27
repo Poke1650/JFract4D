@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import jfract4d.discord.infraction.DiscordInfractionCategory;
+import jfract4d.jfract.api.infraction.impl.InfractionCategoryImpl;
 import jfract4d.gui.util.DialogUtil;
 import jfract4d.jfract.JFract;
 import jfract4d.jfract.api.infraction.InfractionCategory;
@@ -67,9 +67,8 @@ public class EditInfractionCategoryController implements Initializable {
         }
 
         try {
-            JFract.getDataManager().getInfractionManager().updateInfractionCategory(
-                    cat.getName(), 
-                    new DiscordInfractionCategory(name.getText(), Integer.valueOf(pts.getText()))
+            JFract.getDataManager().getInfractionManager().updateInfractionCategory(cat.getName(), 
+                    new InfractionCategoryImpl(name.getText(), Integer.valueOf(pts.getText()))
             );
             ((Stage) cancelBtn.getScene().getWindow()).close();
         } catch (SQLException ex) {

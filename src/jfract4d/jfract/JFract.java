@@ -1,6 +1,8 @@
 package jfract4d.jfract;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jfract4d.jfract.api.data.DataManager;
 import jfract4d.jfract.core.ConfigManager;
 import jfract4d.jfract.core.DatabaseManager;
@@ -12,6 +14,11 @@ import jfract4d.jfract.core.DatabaseManager;
  */
 public class JFract {
 
+    /**
+     * Logger for the JFract API
+     */
+    public static final Logger LOGGER = Logger.getLogger("JFract");
+    
     /**
      * Current state of the API
      */
@@ -40,11 +47,12 @@ public class JFract {
      * @throws ClassNotFoundException 
      */
     public static void init(String configPath) throws IOException, ClassNotFoundException {
+        JFract.LOGGER.log(Level.INFO, "Initialising JFract with config at {0}", configPath);
         state = States.INITIALISING;
 
         configManager = new ConfigManager();
         configManager.load(configPath);
-
+        
         databaseManager = new DatabaseManager();
         databaseManager.init();
 

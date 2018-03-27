@@ -1,13 +1,13 @@
-package jfract4d.discord.infraction;
+package jfract4d.jfract.api.infraction.impl;
 
 import jfract4d.jfract.api.infraction.InfractionCategory;
 import jfract4d.jfract.api.infraction.InfractionType;
 
 /**
- *
+ * Basic Implementation of an infraction type
  * @author Antoine Gagnon
  */
-public class DiscordInfractionType implements InfractionType {
+public class InfractionTypeImpl implements InfractionType {
 
     /**
      * Name of the infraction type
@@ -30,7 +30,7 @@ public class DiscordInfractionType implements InfractionType {
      */
     private int id = -1;
 
-    public DiscordInfractionType(String name, String description, InfractionCategory category) {
+    public InfractionTypeImpl(String name, String description, InfractionCategory category) {
         this.name = name.toLowerCase();
         setCategory(category);
         setDescription(description);
@@ -42,7 +42,7 @@ public class DiscordInfractionType implements InfractionType {
      * @param id
      * @return the instance
      */
-    public DiscordInfractionType withID(int id) {
+    public InfractionTypeImpl withID(int id) {
         this.id = id;
         return this;
     }

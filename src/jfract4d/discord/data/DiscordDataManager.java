@@ -10,10 +10,19 @@ import jfract4d.jfract.api.data.UserManager;
  */
 public class DiscordDataManager implements DataManager {
 
+    /**
+     * The infraction manager instance
+     */
     private InfractionManager imanager;
 
+    /**
+     * The infraction manager instance
+     */
     private UserManager umanager;
 
+    /**
+     * Create a new discord data manager and instantiate the other managers
+     */
     public DiscordDataManager() {
         imanager = new DiscordInfractionManager();
         umanager = new DiscordUserManager();

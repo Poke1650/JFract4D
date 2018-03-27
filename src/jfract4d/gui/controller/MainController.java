@@ -263,7 +263,7 @@ public class MainController implements Initializable {
                     setText(null);
                 } else {
                     setText(String.format(
-                            "ID: %s\nTarget: %s\nGiver: %s\nType: %s\nCategory: %s pts: %s\nTime: %s\nEffective: %s",
+                            "ID: %s\nTarget: %s | Giver: %s\nType: %s | Category: %s pts: %s\nTime: %s | Effective: %s",
                             item.getID(),
                             item.getTarget().getID(),
                             item.getGiver().getID(),

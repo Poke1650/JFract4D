@@ -1,4 +1,4 @@
-package jfract4d.discord.infraction;
+package jfract4d.jfract.api.infraction.impl;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -8,10 +8,10 @@ import jfract4d.jfract.api.user.User;
 import jfract4d.jfract.helper.InfractionHelper;
 
 /**
- *
+ * Basic Implementation of an infraction
  * @author Antoine Gagnon
  */
-public class DiscordInfraction implements Infraction {
+public class InfractionImpl implements Infraction {
 
     /**
      * The ID of this infraction, a 8 character hex string
@@ -54,7 +54,7 @@ public class DiscordInfraction implements Infraction {
      * @param iType
      * @param effective
      */
-    public DiscordInfraction(String id, User giver, User target, Date time, InfractionType iType, boolean effective) {
+    public InfractionImpl(String id, User giver, User target, Date time, InfractionType iType, boolean effective) {
         this.id = id;
         this.giver = giver;
         this.target = target;
@@ -72,7 +72,7 @@ public class DiscordInfraction implements Infraction {
      * @param iType
      * @throws java.sql.SQLException
      */
-    public DiscordInfraction(User giver, User target, Date time, InfractionType iType) throws SQLException {
+    public InfractionImpl(User giver, User target, Date time, InfractionType iType) throws SQLException {
 
         this.id = InfractionHelper.getNextInfractionID();
 
@@ -93,7 +93,7 @@ public class DiscordInfraction implements Infraction {
      * @param iType
      * @throws java.sql.SQLException
      */
-    public DiscordInfraction(User giver, User target, InfractionType iType) throws SQLException {
+    public InfractionImpl(User giver, User target, InfractionType iType) throws SQLException {
 
         this.id = InfractionHelper.getNextInfractionID();
 

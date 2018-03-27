@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jfract4d.jfract.JFract;
 
 /**
  * Wrapper around the {@link Properties} class with added functionality like
@@ -38,6 +39,7 @@ public class ConfigManager {
      * @throws IOException if there's an error white reading the properties file
      */
     public void load(String configPath) throws FileNotFoundException, IOException {
+        JFract.LOGGER.log(Level.INFO, "Loading config file {0}", configPath);
         FileInputStream in = new FileInputStream(configPath);
         path = configPath;
         properties.load(in);

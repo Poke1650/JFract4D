@@ -20,7 +20,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import jfract4d.discord.exception.MalformedDiscordIDException;
 
 import jfract4d.discord.user.DiscordRole;
 import jfract4d.discord.util.FormatHelper;
@@ -28,6 +27,7 @@ import jfract4d.gui.util.DialogUtil;
 
 import jfract4d.gui.util.FormatUtil;
 import jfract4d.jfract.JFract;
+import jfract4d.jfract.api.exception.MalformedIDException;
 
 /**
  * FXML Controller class
@@ -84,7 +84,7 @@ public class NewRoleController implements Initializable {
         try {
             JFract.getDataManager().getUserManager().addRole(new DiscordRole(id.getText(), name.getText(), Integer.valueOf(level.getText())));
             ((Stage) cancelBtn.getScene().getWindow()).close();
-        } catch (MalformedDiscordIDException e) {
+        } catch (MalformedIDException e) {
             DialogUtil.exceptionDialog("Error adding role", "The ID is malformed", e.getMessage(), e).showAndWait();
         } catch (SQLException ex) {
             Logger.getLogger(NewRoleController.class.getName()).log(Level.SEVERE, null, ex);

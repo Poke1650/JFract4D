@@ -31,6 +31,7 @@ import jfract4d.discord.util.FormatHelper;
 import jfract4d.gui.util.DialogUtil;
 import jfract4d.gui.util.FormatUtil;
 import jfract4d.jfract.JFract;
+import jfract4d.jfract.api.exception.MalformedIDException;
 import jfract4d.jfract.api.user.Role;
 
 /**
@@ -88,7 +89,7 @@ public class NewUserController implements Initializable {
         } catch (SQLException ex) {
             DialogUtil.exceptionDialog("Error", "Error adding user", ex.getMessage(), ex).showAndWait();
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedDiscordIDException ex) {
+        } catch (MalformedIDException ex) {
             Logger.getLogger(NewUserController.class.getName()).log(Level.SEVERE, null, ex);
             DialogUtil.exceptionDialog("Error", "Malformed user ID", ex.getMessage(), ex).showAndWait();
         }
